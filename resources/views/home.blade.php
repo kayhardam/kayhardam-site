@@ -6,6 +6,24 @@
     <title>kay hardam — open-source tools voor bewegingsonderwijs</title>
     <meta name="description" content="Open-source tools voor bewegingsonderwijs, gebouwd door een docent die ze zelf gebruikt.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- Canonical URL --}}
+    <link rel="canonical" href="https://kayhardam.dev/">
+
+    {{-- Open Graph --}}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kayhardam.dev/">
+    <meta property="og:title" content="kay hardam — open-source tools voor bewegingsonderwijs">
+    <meta property="og:description" content="Open-source tools voor bewegingsonderwijs, gebouwd door een docent die ze zelf gebruikt.">
+    <meta property="og:image" content="https://kayhardam.dev/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="nl_NL">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="kay hardam — open-source tools voor bewegingsonderwijs">
+    <meta name="twitter:description" content="Open-source tools voor bewegingsonderwijs, gebouwd door een docent die ze zelf gebruikt.">
+    <meta name="twitter:image" content="https://kayhardam.dev/og-image.png">
 </head>
 <body>
     <div class="max-w-3xl mx-auto px-6 md:px-10 py-10 md:py-12">

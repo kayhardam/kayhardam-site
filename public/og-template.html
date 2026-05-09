@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="nl">
+    <head>
+        <meta charset="UTF-8" />
+        <title>OG image preview — kay hardam</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background: #1f1f1f;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                margin: 0;
+            }
+
+            .frame {
+                width: 1200px;
+                height: 630px;
+                background: #fcfaf4;
+                color: #0f0f0f;
+                font-family: "Inter", system-ui, sans-serif;
+                padding: 72px 80px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                overflow: hidden;
+            }
+
+            .top {
+                font-family: "JetBrains Mono", ui-monospace, monospace;
+                font-size: 18px;
+                font-weight: 600;
+                color: #6b6b6b;
+                letter-spacing: 0.04em;
+            }
+
+            .name {
+                font-size: 160px;
+                font-weight: 800;
+                line-height: 0.9;
+                letter-spacing: -0.045em;
+                margin-bottom: 36px;
+            }
+
+            .tag {
+                font-size: 28px;
+                font-weight: 500;
+                line-height: 1.4;
+                max-width: 760px;
+            }
+
+            .footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
+
+            .pill {
+                font-family: "JetBrains Mono", ui-monospace, monospace;
+                font-size: 16px;
+                font-weight: 700;
+                color: #0f0f0f;
+                background: #ffe54b;
+                padding: 6px 12px;
+                letter-spacing: 0.04em;
+            }
+
+            .meta {
+                font-family: "JetBrains Mono", ui-monospace, monospace;
+                font-size: 16px;
+                font-weight: 600;
+                color: #6b6b6b;
+                letter-spacing: 0.04em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="frame">
+            <div class="top">// kayhardam.dev</div>
+
+            <div>
+                <div class="name">kay hardam</div>
+                <div class="tag">
+                    Open-source tools voor bewegingsonderwijs, gebouwd door een
+                    docent die ze zelf gebruikt.
+                </div>
+            </div>
+
+            <div class="footer">
+                <span class="pill">2026</span>
+                <span class="meta">// vakleerkracht · sport · indie</span>
+            </div>
+        </div>
+    </body>
+</html>
