@@ -1,135 +1,106 @@
 # CLAUDE.md
 
-Reference for Claude Code sessions and future-me. Keep this in sync with reality — when something here drifts from the actual code, update this file in the same commit.
+Reference voor Claude Code-sessies en voor mezelf later. Wanneer iets hier drift van de werkelijke code, update deze file in dezelfde commit als de code-wijziging.
 
 ## Project
 
-**kayhardam.dev** — personal indie portfolio site.
+**kayhardam.dev** — persoonlijke indie portfolio.
 
-Built by Kay Hardam, a sports teacher (vakleerkracht) in Dutch special-needs education (currently RENN4). The site documents what I build: open-source sports- and teaching-tools, made as practice in design + development with AI, while learning Laravel from scratch with zero PHP background.
+Vakleerkracht sport in het Nederlandse VSO (RENN4). Bouw open-source sport- en lesgeef-tools als oefening in design + development met AI. Leer Laravel from scratch, zero PHP-ervaring.
 
-Single-page scroll. Dutch primary, English toggle. Sections: hero (with live demo), about, tools, field notes, footer.
+Single-page scroll. NL primair, EN-toggle gepland. Secties: hero met live demo, about, tools, field notes, footer.
+
+**Designfilosofie**: function-first, niet identity-first. Geen "kijk wat ik kan", wel "hier zijn dingen die werken". De site dient zichzelf en wie er iets aan heeft.
 
 ## Stack
 
-- **Laravel 13** (PHP 8.3+)
-- **Blade** templating, **Tailwind v4** via Vite
-- **Markdown** for field notes via `Str::markdown()` or `league/commonmark`
-- **Self-hosted fonts** via `@fontsource/inter` and `@fontsource/jetbrains-mono`
-- **No database** — SQLite default ships but is unused; site is purely render-time
-- **Hosting**: Laravel Cloud (Starter plan, EU Central / Frankfurt)
-- Hetzner VPS sandbox stays alive for separate experiments, not this site
+- Laravel 13 (PHP 8.3+)
+- Blade + Tailwind v4 via Vite
+- Markdown voor field notes via `Str::markdown()` of `league/commonmark` (zit in framework)
+- Self-hosted fonts via `@fontsource/inter` en `@fontsource/jetbrains-mono`
+- Geen database
+- Hosting: Laravel Cloud Starter (EU Frankfurt). Domein via Cloudflare DNS-only (geen proxy/oranje wolk — Laravel Cloud heeft eigen edge).
 
 ## Design tokens
 
-The visual system is **indie/brutalist** with a single accent color. Discipline matters here — the highlighter yellow only earns its punch by being scarce.
-
-### Colors
+Indie/brutalist met highlighter yellow als bijna-enige accent. Tokens leven in `resources/css/app.css` als `@theme`-block:
 
 ```css
---color-bg:     #FBFAF5;  /* warm white, slight cream */
---color-fg:     #0F0F0F;  /* near-black, subtle warmth */
---color-accent: #F1FF26;  /* highlighter yellow, slightly chartreuse */
---color-muted:  #737373;  /* neutral gray for mono labels and secondary text */
+@theme {
+    --color-bg: #fcfaf4;          /* warm cream wit */
+    --color-fg: #0f0f0f;          /* near-black */
+    --color-fg-soft: #3d3d3d;     /* secundaire body-tekst */
+    --color-muted: #6b6b6b;       /* mono labels, h2-subtitles */
+    --color-muted-light: #9a9a9a; /* tekst op donkere bg (lab-block) */
+    --color-accent: #ffe54b;      /* highlighter yellow, golden niet chartreuse */
+    --color-accent-hover: #f5c518;/* CTA-button hover */
+    --color-divider: #e5e0d5;     /* subtiele rule-lijnen */
+
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
 ```
 
-**Single-accent rule**: yellow ONLY for emphasis (highlighted words, key CTAs, hover states). Never for backgrounds, borders, separators, or section fills. If yellow would appear on >5% of a viewport at any moment, it's wrong.
+### Yellow-discipline
 
-### Typography
+Yellow alleen voor accent, niet decoratie. Op de live homepage staat geel op vijf plekken: drie section-labels (rechthoekige pills met mono), één lab-tag binnen het donkere demo-block, en de lab-CTA-button. Elk heeft functie.
 
-- **Display**: Inter, weight 800–900, **lowercase**
-- **Body**: Inter, weight 400–500, sentence case
-- **Mono**: JetBrains Mono, for labels, code references, and metadata — typically uppercase with tracking
+Wat **niet** yellow is: tag-pills, link-underlines, github-button-fills, footer-links, nav-pills. Als het terugkruipt op die plekken, dan kruipt yellow terug van accent naar decoratie. Dat is de val.
 
-### Type scale (rem-based, mobile-first)
+Vuistregel: als yellow op meer dan ~5% van de viewport voorkomt op enig moment, is het te veel.
 
-| Token | Value | Use |
-|---|---|---|
-| `display-xl` | 8rem (~128px) | hero only |
-| `display-lg` | 5rem (~80px) | section openers |
-| `display-md` | 3rem (~48px) | sub-section |
-| `body` | 1.0625rem (~17px) | paragraph default |
-| `small` | 0.875rem (~14px) | captions, footnotes |
-| `mono-label` | 0.75rem (~12px) | uppercase, `letter-spacing: 0.08em` |
+### Casing
 
-Mobile: shrink display-xl to ~5rem, display-lg to ~3rem. Body and mono-label stay constant.
+- Display headings: **lowercase** ("kay hardam", "wat ik bouw")
+- Body, paragrafen: **sentence case** ("Vakleerkracht sport in het...")
+- Mono labels: **UPPERCASE** met letter-spacing 0.04–0.08em ("WAT IS DIT", "01 / OVER")
+- Inline links in body: zoals omringende tekst
 
-### Casing rules
+### Edges
 
-| Element | Case | Example |
-|---|---|---|
-| Display headings | all lowercase | `kay hardam`, `wat ik bouw` |
-| Body copy | sentence case | `Vakleerkracht sport in het Nederlandse VSO.` |
-| Mono labels | ALL UPPERCASE | `WAT IS DIT`, `SECTION 02 / TOOLS` |
-| Links inline body | sentence case | `bekijk de repo →` |
+Geen `border-radius`. Brutalist commitment. Section-pills, lab-block, buttons — allemaal scherp. Eén ronde corner ergens kraakt het hele systeem.
 
-### Spacing
+### Type-aanpak
 
-- Section vertical padding: `py-24` mobile, `py-32` tablet+
-- Body max-width: `~65ch` for readability
-- Hero takes full viewport height on first paint (`min-h-screen`)
+Geen vaste type-scale-tokens. Tailwind defaults + arbitrary values per gebruik. Bijvoorbeeld:
+- Hero: `text-[64px] md:text-[88px]`
+- Section h2: `text-[38px]`
+- Body: `text-[15px]`
+- Lead: `text-[17px]`
+- Mono labels: `text-[11px]`
 
-## File structure (target)
+Houdt flexibiliteit. Tokeniseren als patronen vaak genoeg terugkomen om te verdienen.
 
-```
-app/
-  Http/Controllers/
-    HomeController.php          single-page entry
-resources/
-  views/
-    home.blade.php              full page composition
-    components/
-      hero.blade.php
-      about.blade.php
-      tools.blade.php
-      field-notes.blade.php
-      footer.blade.php
-      lang-toggle.blade.php
-    field-notes/                .md files, parsed at render-time
-      2026-05-09-laravel-cloud-dns.md
-  css/
-    app.css                     Tailwind import + design tokens as CSS vars
-  js/
-    app.js                      Vite entry
-    prompt-generator.js         vanilla JS, the live demo logic
-routes/
-  web.php                       single GET / → HomeController@index
-```
+## Code-conventies
 
-## Code conventions
+- Tailwind utility-first inline. Custom utilities via `@utility` alleen bij ≥5× repetitie.
+- CSS custom properties via `@theme` voor tokens. Worden auto-generated als utilities (`bg-accent`, `text-muted`, etc.).
+- Vanilla JS, geen framework. Modules in `resources/js/`, geïmporteerd vanuit `app.js`.
+- Locale: NL primair in markup en copy. EN volgt als de site er om vraagt.
+- Honest empty states: als een sectie nog leeg is (tools, notes), zég dat. Geen placeholder-cards die fake gewicht geven.
 
-- **Blade components**: lowercase kebab-case (`<x-hero />`, `<x-field-note-list />`)
-- **CSS custom properties** for tokens; Tailwind for layout/utilities
-- **No JS framework** — vanilla JS for the prompt generator and language toggle
-- **Tailwind v4 syntax**: tokens in `@theme` block in `app.css`, no `tailwind.config.js`
-- **Locale**: NL is primary; EN strings live alongside in CONTENT.md and Blade conditionals (or a simple `$lang` variable; defer to whatever feels lightest)
+## Git-commits
 
-## Git commit conventions
+Lowercase imperatief, kort, zelf-omschrijvend.
 
-Lowercase imperative mood. Short, self-describing. Examples:
+- ✓ `add hero section`
+- ✓ `refine homepage: restrained yellow, sharp edges`
+- ✓ `add open graph tags + share image`
+- ✗ `feat: implement homepage refinement (closes #12)`
 
-- `add hero section`
-- `wire up prompt generator`
-- `tweak yellow contrast on warm white`
-- `field note: laravel cloud DNS gotchas`
-- `fix mono-label letter-spacing`
+Geen conventional-commits-prefixes. Geen issue-refs. Geen emojis. Korte zinnen die zichzelf uitleggen.
 
-No conventional-commits prefixes (`feat:`, `fix:`) — overkill for personal indie. Keep them small enough that the subject IS the description.
+### Niet onderhandelbaar
 
-### Critical commit rule
+**NEVER include "Co-authored-by Claude" of soortgelijke AI-attributie** in commits, PRs, code-comments, README, file headers, of waar dan ook. Code is van mij. Sessies met Claude zijn tooling, geen co-authorship.
 
-**NEVER include "Co-authored-by Claude" or any AI attribution** anywhere — not in commits, PRs, code comments, README, file headers, or anywhere else. This is non-negotiable. Code is mine. Sessions with Claude are tooling, not co-authorship.
+## Sessies met Claude Code
 
-## Working with Claude Code
-
-When starting a Claude Code session for this repo:
-
-1. Have it load both `CLAUDE.md` and `CONTENT.md` first as context
-2. Per-phase scope: one section, one feature, one fix per session — don't mix concerns
-3. Reference design tokens by name in prompts (e.g. "use `--color-accent` for the highlight word")
-4. Reference content blocks by section heading from CONTENT.md (e.g. "the hero NL copy")
-5. Commits go through the conventions above — Claude Code respects the no-attribution rule
+1. Laat eerst CLAUDE.md en CONTENT.md lezen
+2. Eén focus-area per sessie (één feature, één refactor) — niet mixen
+3. Refereer tokens en sectie-namen bij naam
+4. Commits volgen bovenstaande regels — geen attributie, geen ceremonie
 
 ## Living document
 
-This file gets updated as decisions evolve. If a token, convention, or section design changes, update CLAUDE.md in the same commit that changes the code. Future sessions — Claude or human — should be able to read this and reconstruct the project's intent without external context.
+Wanneer een token, conventie of beslissing verandert, update deze file in dezelfde commit als de code. Toekomstige sessies (Claude of mens) moeten kunnen reconstrueren wat de intent was zonder externe context.
