@@ -1,11 +1,58 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* Fontsource — self-hosted Inter + JetBrains Mono */
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/800.css";
+@import "@fontsource/inter/900.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
 
+/* Design tokens — zie CLAUDE.md voor het systeem */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-bg: #fbfaf5;
+    --color-fg: #0f0f0f;
+    --color-accent: #f1ff26;
+    --color-muted: #737373;
+
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+    --text-mono-label: 0.75rem;
+    --text-body: 1.0625rem;
+    --text-small: 0.875rem;
+    --text-display-md: 3rem;
+    --text-display-lg: 5rem;
+    --text-display-xl: 8rem;
+}
+
+/* Page defaults */
+@layer base {
+    body {
+        background-color: var(--color-bg);
+        color: var(--color-fg);
+        font-family: var(--font-sans);
+        font-size: var(--text-body);
+        font-weight: 400;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Composite utilities */
+@utility mono-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-label);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+}
+
+@utility display {
+    font-weight: 900;
+    text-transform: lowercase;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
 }
