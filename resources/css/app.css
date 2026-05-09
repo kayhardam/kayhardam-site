@@ -1,29 +1,27 @@
 @import "tailwindcss";
 
-/* Fontsource — self-hosted Inter + JetBrains Mono */
+/* Self-hosted fonts */
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/500.css";
+@import "@fontsource/inter/700.css";
 @import "@fontsource/inter/800.css";
-@import "@fontsource/inter/900.css";
-@import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/jetbrains-mono/500.css";
+@import "@fontsource/jetbrains-mono/600.css";
+@import "@fontsource/jetbrains-mono/700.css";
 
-/* Design tokens — zie CLAUDE.md voor het systeem */
+/* Design tokens — zie CLAUDE.md */
 @theme {
-    --color-bg: #fbfaf5;
+    --color-bg: #fcfaf4;
     --color-fg: #0f0f0f;
-    --color-accent: #f1ff26;
-    --color-muted: #737373;
+    --color-fg-soft: #3d3d3d;
+    --color-muted: #6b6b6b;
+    --color-muted-light: #9a9a9a;
+    --color-accent: #ffe54b;
+    --color-accent-hover: #f5c518;
+    --color-divider: #e5e0d5;
 
     --font-sans: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
-
-    --text-mono-label: 0.75rem;
-    --text-body: 1.0625rem;
-    --text-small: 0.875rem;
-    --text-display-md: 3rem;
-    --text-display-lg: 5rem;
-    --text-display-xl: 8rem;
 }
 
 /* Page defaults */
@@ -32,27 +30,9 @@
         background-color: var(--color-bg);
         color: var(--color-fg);
         font-family: var(--font-sans);
-        font-size: var(--text-body);
-        font-weight: 400;
-        line-height: 1.55;
+        font-weight: 500;
+        line-height: 1.5;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-}
-
-/* Composite utilities */
-@utility mono-label {
-    font-family: var(--font-mono);
-    font-size: var(--text-mono-label);
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-}
-
-@utility display {
-    font-weight: 900;
-    text-transform: lowercase;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
 }

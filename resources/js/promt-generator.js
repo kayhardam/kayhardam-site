@@ -1,14 +1,14 @@
 const PROMPTS = [
-    "warming-up voor 8 kinderen, leeftijd 7–9, focus op samenwerking, materiaal: pionnen + zachte ballen, 10 minuten",
-    "tikkertje-variant voor groep 6, max 5 minuten, nadruk op luisteren naar instructies",
-    "spel voor 12 leerlingen VSO cluster 4, na pauze, hoog energieniveau, doel: zelfregulatie oefenen",
-    "circuit met 4 stations voor 16 kinderen, focus: balans + coördinatie, 25 minuten",
-    "samenwerkingsopdracht zonder competitie, groep 5, in tweetallen, met 1 bal per groepje",
-    "cooling-down met ademhalingsoefening, 10 leerlingen, na intensieve les, 5 minuten",
-    "rustig uitloopspel voor het einde van de les, 12 leerlingen, materialen uit de kast",
-    "activerende warming-up zonder materiaal, snel uitlegbaar, klas die onrustig binnenkomt",
-    "doelgericht spel voor motorische ontwikkeling, leeftijd 9–11, in tweetallen, 12 minuten",
-    "afsluitingsspel waarin leerlingen elkaar feedback geven, groep 7, met 2 hoepels en 1 bal",
+    "30 seconden plank — kies je positie",
+    "10 burpees, en een glimlach erbij",
+    "jumping jacks tot het liedje uit is",
+    "5 keer diep in en uit ademen",
+    "loop één minuut door de zaal, stilletjes",
+    "rek je rug, je nek, je schouders",
+    "drink water — echt, nu",
+    "doe een squat per goed antwoord",
+    "pas een bal naar de stilste in de groep",
+    "sluit je ogen, hou je balans op één been",
 ];
 
 let lastIndex = -1;
@@ -33,7 +33,5 @@ export function initPromptGenerator() {
 
     button.addEventListener("click", () => {
         output.textContent = pickRandom();
-        output.classList.remove("text-muted");
-        button.textContent = "nog één →";
     });
 }
