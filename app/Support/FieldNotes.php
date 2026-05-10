@@ -17,7 +17,7 @@ class FieldNotes
         }
 
         return collect(File::files($directory))
-            ->map(fn ($file) => self::parse($file))
+            ->map(fn($file) => self::parse($file))
             ->sortByDesc('date')
             ->values();
     }
