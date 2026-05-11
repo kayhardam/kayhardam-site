@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <title>kay hardam — open-source tools voor bewegingsonderwijs</title>
-    <meta name="description" content="Open-source tools voor bewegingsonderwijs, gebouwd door een docent die ze zelf gebruikt. Plus notities uit het bouwproces.">
+    <title>kay hardam — vakleerkracht sport, open-source tools voor lesgeven</title>
+    <meta name="description" content="Vakleerkracht sport. Ik bouw open-source tools voor lesgeven en schrijf over wat ik onderweg leer.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- Canonical URL --}}
     <link rel="canonical" href="https://kayhardam.dev/">
@@ -14,8 +14,8 @@
     {{-- Open Graph --}}
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kayhardam.dev/">
-    <meta property="og:title" content="kay hardam — open-source tools voor bewegingsonderwijs">
-    <meta property="og:description" content="Open-source tools voor bewegingsonderwijs, gebouwd door een docent die ze zelf gebruikt. Plus notities uit het bouwproces.">
+    <meta property="og:title" content="kay hardam — vakleerkracht sport, open-source tools voor lesgeven">
+    <meta property="og:description" content="Vakleerkracht sport. Ik bouw open-source tools voor lesgeven en schrijf over wat ik onderweg leer.">
     <meta property="og:image" content="https://kayhardam.dev/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -23,8 +23,8 @@
 
     {{-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="kay hardam — open-source tools voor bewegingsonderwijs">
-    <meta name="twitter:description" content="Open-source tools voor bewegingsonderwijs, gebouwd door een docent die ze zelf gebruikt. Plus notities uit het bouwproces.">
+    <meta name="twitter:title" content="kay hardam — vakleerkracht sport, open-source tools voor lesgeven">
+    <meta name="twitter:description" content="Vakleerkracht sport. Ik bouw open-source tools voor lesgeven en schrijf over wat ik onderweg leer.">
     <meta name="twitter:image" content="https://kayhardam.dev/og-image.png">
 </head>
 
@@ -44,7 +44,7 @@
         {{-- Hero --}}
         <h1 class="text-[64px] md:text-[88px] font-extrabold tracking-[-0.045em] leading-[0.9] mb-4">kay hardam</h1>
         <p class="text-[17px] leading-[1.5] max-w-[520px] mb-10 font-medium">
-            Open-source tools voor bewegingsonderwijs, gebouwd door een docent die ze zelf gebruikt. Plus notities uit het bouwproces.
+            Vakleerkracht sport. Ik bouw open-source tools voor lesgeven en schrijf over wat ik onderweg leer.
         </p>
 
         {{-- Live demo lab --}}

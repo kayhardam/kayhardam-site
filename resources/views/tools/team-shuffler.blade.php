@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <title>team-shuffler — kay hardam</title>
-    <meta name="description" content="Maak willekeurige teams. Plak namen, kies aantal teams, klaar. Open-source tool voor bewegingsonderwijs.">
+    <meta name="description" content="Maak willekeurige teams. Plak namen, kies aantal teams, klaar. Open-source tool voor lesgeven.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link rel="canonical" href="https://kayhardam.dev/tools/team-shuffler">
