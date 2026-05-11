@@ -1,25 +1,12 @@
-# CLAUDE.md
+## Blade components
 
-Reference voor Claude Code-sessies en voor mezelf later. Wanneer iets hier drift van de werkelijke code, update deze file in dezelfde commit als de code-wijziging.
+Sinds de layout-dedupe leeft de gedeelde HTML-shell in components:
 
-## Project
+- `<x-layout title="..." description="..." path="/..." type="website">` — head met meta tags, body, max-w-3xl container. Slot voor pagina-content.
+- `<x-nav />` — top-nav met links naar `/`, `/#about`, `/#tools`, `/#notes`. Opt-in (note-detail laat 'm weg).
+- `<x-footer />` — footer met github + mail. Opt-in.
 
-**kayhardam.dev** — persoonlijke indie portfolio.
-
-Vakleerkracht sport in het Nederlandse VSO (RENN4). Bouw open-source sport- en lesgeef-tools als oefening in design + development met AI. Leer Laravel from scratch, zero PHP-ervaring.
-
-Single-page scroll. NL primair, EN-toggle gepland. Secties: hero met live demo, about, tools, field notes, footer.
-
-**Designfilosofie**: function-first, niet identity-first. Geen "kijk wat ik kan", wel "hier zijn dingen die werken". De site dient zichzelf en wie er iets aan heeft.
-
-## Stack
-
-- Laravel 13 (PHP 8.3+)
-- Blade + Tailwind v4 via Vite
-- Markdown voor field notes via `Str::markdown()` of `league/commonmark` (zit in framework)
-- Self-hosted fonts via `@fontsource/inter` en `@fontsource/jetbrains-mono`
-- Geen database
-- Hosting: Laravel Cloud Starter (EU Frankfurt). Domein via Cloudflare DNS-only (geen proxy/oranje wolk — Laravel Cloud heeft eigen edge).
+Bestanden in `resources/views/components/`. Props in component-files via `@props([...])`.
 
 ## Design tokens
 
@@ -27,25 +14,28 @@ Indie/brutalist met highlighter yellow als bijna-enige accent. Tokens leven in `
 
 ```css
 @theme {
-    --color-bg: #fcfaf4;          /* warm cream wit */
-    --color-fg: #0f0f0f;          /* near-black */
-    --color-fg-soft: #3d3d3d;     /* secundaire body-tekst */
-    --color-muted: #6b6b6b;       /* mono labels, h2-subtitles */
+    --color-bg: #fcfaf4; /* warm cream wit */
+    --color-fg: #0f0f0f; /* near-black */
+    --color-fg-soft: #3d3d3d; /* secundaire body-tekst */
+    --color-muted: #6b6b6b; /* mono labels, h2-subtitles */
     --color-muted-light: #9a9a9a; /* tekst op donkere bg (lab-block) */
-    --color-accent: #ffe54b;      /* highlighter yellow, golden niet chartreuse */
-    --color-accent-hover: #f5c518;/* CTA-button hover */
-    --color-divider: #e5e0d5;     /* subtiele rule-lijnen */
+    --color-accent: #ffe54b; /* highlighter yellow, golden niet chartreuse */
+    --color-accent-hover: #f5c518; /* CTA-button hover */
+    --color-divider: #e5e0d5; /* subtiele rule-lijnen */
 
-    --font-sans: 'Inter', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 ```
 
 ### Yellow-discipline
 
-Yellow alleen voor accent, niet decoratie. Op de live homepage staat geel op vijf plekken: drie section-labels (rechthoekige pills met mono), één lab-tag binnen het donkere demo-block, en de lab-CTA-button. Elk heeft functie.
+Yellow alleen voor accent, niet decoratie. Op enig moment max ~5 zichtbare accent-plekken:
 
-Wat **niet** yellow is: tag-pills, link-underlines, github-button-fills, footer-links, nav-pills. Als het terugkruipt op die plekken, dan kruipt yellow terug van accent naar decoratie. Dat is de val.
+- **Homepage**: drie section-labels (rechthoekige pills met mono), één lab-tag binnen het donkere demo-block, één lab-CTA-button.
+- **Tool-detail pages**: tool-pill bovenaan, primary CTA-button.
+
+Wat **niet** yellow is: tag-pills in lijsten, link-underlines, github-buttons, footer-links, nav-pills, helper-text. Als het terugkruipt op die plekken, kruipt yellow van accent naar decoratie. Dat is de val.
 
 Vuistregel: als yellow op meer dan ~5% van de viewport voorkomt op enig moment, is het te veel.
 
@@ -53,7 +43,7 @@ Vuistregel: als yellow op meer dan ~5% van de viewport voorkomt op enig moment, 
 
 - Display headings: **lowercase** ("kay hardam", "wat ik bouw")
 - Body, paragrafen: **sentence case** ("Vakleerkracht sport in het...")
-- Mono labels: **UPPERCASE** met letter-spacing 0.04–0.08em ("WAT IS DIT", "01 / OVER")
+- Mono labels: **lowercase** met letter-spacing (~0.04em) ("01 / over", "// live demo · prompt-generator")
 - Inline links in body: zoals omringende tekst
 
 ### Edges
@@ -63,10 +53,13 @@ Geen `border-radius`. Brutalist commitment. Section-pills, lab-block, buttons �
 ### Type-aanpak
 
 Geen vaste type-scale-tokens. Tailwind defaults + arbitrary values per gebruik. Bijvoorbeeld:
-- Hero: `text-[64px] md:text-[88px]`
+
+- Hero h1: `text-[64px] md:text-[88px]` (homepage), `text-[48px] md:text-[64px]` (tool-detail)
 - Section h2: `text-[38px]`
+- Note detail h1: `text-[38px] md:text-[48px]`
 - Body: `text-[15px]`
-- Lead: `text-[17px]`
+- Lead/hero-subtitle: `text-[17px]`
+- Helper-text onder labels: `text-[14px]`
 - Mono labels: `text-[11px]`
 
 Houdt flexibiliteit. Tokeniseren als patronen vaak genoeg terugkomen om te verdienen.
@@ -75,31 +68,43 @@ Houdt flexibiliteit. Tokeniseren als patronen vaak genoeg terugkomen om te verdi
 
 - Tailwind utility-first inline. Custom utilities via `@utility` alleen bij ≥5× repetitie.
 - CSS custom properties via `@theme` voor tokens. Worden auto-generated als utilities (`bg-accent`, `text-muted`, etc.).
-- Vanilla JS, geen framework. Modules in `resources/js/`, geïmporteerd vanuit `app.js`.
+- Vanilla JS, geen framework.
+    - **Page-specifieke JS** inline in de Blade view, in `<script>` binnen de `<x-layout>` slot. Voorbeeld: team-shuffler shuffle-logica.
+    - **Cross-page JS** in `resources/js/`, geïmporteerd via `app.js`. Voorbeeld: prompt-generator op de homepage.
 - Locale: NL primair in markup en copy. EN volgt als de site er om vraagt.
-- Honest empty states: als een sectie nog leeg is (tools, notes), zég dat. Geen placeholder-cards die fake gewicht geven.
+- Honest empty states: als een sectie nog leeg is, zég dat. Geen placeholder-cards die fake gewicht geven.
+
+### Vite tijdens dev
+
+**Tailwind v4 genereert classes on-demand uit source-scans.** Nieuwe utility-combos die je in views toevoegt komen pas in de CSS als `npm run dev` draait. Anders blijft de browser hangen op een oude build en lijken nieuwe classes geen effect te hebben.
+
+Vuistregel: `npm run dev` draait altijd in een tweede terminal-tab tijdens werk. Bij onverklaarbare missing styles is dit het eerste om te checken.
 
 ## Git-commits
 
-Lowercase imperatief, kort, zelf-omschrijvend.
+Conventional commits: `feat`/`fix`/`refactor`/`chore`/`docs` met optionele scope. Imperatief, kort, zelf-omschrijvend.
 
-- ✓ `add hero section`
-- ✓ `refine homepage: restrained yellow, sharp edges`
-- ✓ `add open graph tags + share image`
-- ✗ `feat: implement homepage refinement (closes #12)`
+- ✓ `feat(tools): add team-shuffler with Fisher-Yates shuffle`
+- ✓ `refactor(views): extract layout to blade components`
+- ✓ `feat(seo): add sitemap.xml and robots.txt`
+- ✗ `Added team shuffler thingy`
+- ✗ `feat: implement team-shuffler with Fisher-Yates and round-robin distribution (closes #12)` (te lang, issue-refs)
 
-Geen conventional-commits-prefixes. Geen issue-refs. Geen emojis. Korte zinnen die zichzelf uitleggen.
+Geen emojis. Geen issue-refs in subject. Body-paragraaf alleen als er echt iets uit te leggen valt.
 
 ### Niet onderhandelbaar
 
 **NEVER include "Co-authored-by Claude" of soortgelijke AI-attributie** in commits, PRs, code-comments, README, file headers, of waar dan ook. Code is van mij. Sessies met Claude zijn tooling, geen co-authorship.
 
+In publieke narrative — field notes, about-copy, blog — mág AI als bouwmaatje/sparringpartner wél openlijk genoemd worden. Dat is een ander register.
+
 ## Sessies met Claude Code
 
-1. Laat eerst CLAUDE.md en CONTENT.md lezen
-2. Eén focus-area per sessie (één feature, één refactor) — niet mixen
+1. Laat eerst CLAUDE.md lezen
+2. Eén focus-area per sessie (één feature, één refactor) — niet mixen, of expliciet aankondigen wanneer je hopt
 3. Refereer tokens en sectie-namen bij naam
 4. Commits volgen bovenstaande regels — geen attributie, geen ceremonie
+5. **Working style**: stap voor stap, één commando of taak per beurt. Korte WAAROM-uitleg voor elke stap zodat ik leer, niet kopieer. Git-commits als natural checkpoints na elke werkende fase.
 
 ## Living document
 
