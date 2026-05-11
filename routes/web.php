@@ -16,3 +16,9 @@ Route::get('/notes/{slug}', function (string $slug) {
 });
 
 Route::view('/tools/team-shuffler', 'tools.team-shuffler')->name('tools.team-shuffler');
+
+Route::get('/sitemap.xml', function () {
+    return response()
+        ->view('sitemap', ['notes' => FieldNotes::all()])
+        ->header('Content-Type', 'application/xml');
+});
