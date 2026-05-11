@@ -45,13 +45,45 @@
             Plak namen, kies aantal teams. Klaar.
         </p>
 
-        {{-- Tool UI placeholder --}}
-        <div class="bg-fg text-bg p-7">
-            <div class="font-mono text-[11px] text-accent tracking-wide font-semibold mb-4">// in aanbouw</div>
-            <div class="text-[18px] font-bold leading-[1.4]">
-                De interface komt in de volgende commit.
+        {{-- Tool UI --}}
+        <div class="space-y-7">
+            {{-- namen --}}
+            <div>
+                <label for="names-input" class="block font-mono text-[11px] tracking-wide font-semibold mb-2">
+                    namen
+                </label>
+                <textarea
+                    id="names-input"
+                    rows="8"
+                    placeholder="één naam per regel&#10;bv:&#10;daan&#10;noor&#10;jesse"
+                    class="w-full border-2 border-fg p-4 text-[15px] font-medium font-sans bg-bg"></textarea>
             </div>
+
+            {{-- aantal teams --}}
+            <div>
+                <label for="teams-input" class="block font-mono text-[11px] tracking-wide font-semibold mb-2">
+                    aantal teams
+                </label>
+                <input
+                    type="number"
+                    id="teams-input"
+                    min="2"
+                    max="20"
+                    value="2"
+                    class="w-24 border-2 border-fg p-3 text-[15px] font-medium font-sans bg-bg">
+            </div>
+
+            {{-- submit --}}
+            <button
+                type="button"
+                id="shuffle-button"
+                class="bg-accent text-fg px-[22px] py-3 text-sm font-bold tracking-tight cursor-pointer transition-colors hover:bg-accent-hover">
+                maak teams →
+            </button>
         </div>
+
+        {{-- output --}}
+        <div id="teams-output" class="mt-10 space-y-4"></div>
 
         {{-- Footer --}}
         <footer class="mt-[60px] pt-[22px] border-t-2 border-fg flex justify-between items-center font-mono text-[11px] text-muted font-bold">
@@ -64,6 +96,80 @@
         </footer>
 
     </div>
+
+    <script>
+        (function() {
+            const namesInput = document.getElementById('names-input');
+            const teamsInput = document.getElementById('teams-input');
+            const shuffleBtn = document.getElementById('shuffle-button');
+            const output = document.getElementById('teams-output');
+
+            shuffleBtn.addEventListener('click', () => {
+                // 1. parse namen — split op regels, trim, filter lege
+                const names = namesInput.value
+                    .split('\n')
+                    .map(n => n.trim())
+                    .filter(n => n.length > 0);
+
+                const teamCount = parseInt(teamsInput.value, 10);
+
+                // 2. validatie
+                if (names.length < 2) return renderMessage('Voeg minimaal 2 namen toe.');
+                if (teamCount < 2) return renderMessage('Minimaal 2 teams.');
+                if (names.length < teamCount) return renderMessage('Niet genoeg namen voor dit aantal teams.');
+
+                // 3. Fisher-Yates shuffle
+                const shuffled = [...names];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+
+                // 4. verdeel round-robin over teams
+                const teams = Array.from({
+                    length: teamCount
+                }, () => []);
+                shuffled.forEach((name, idx) => {
+                    teams[idx % teamCount].push(name);
+                });
+
+                renderTeams(teams);
+            });
+
+            function renderTeams(teams) {
+                output.innerHTML = '';
+                teams.forEach((team, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'border-2 border-fg p-5';
+
+                    const label = document.createElement('div');
+                    label.className = 'font-mono text-[11px] tracking-wide font-semibold text-muted mb-3';
+                    label.textContent = `team ${i + 1} · ${team.length} ${team.length === 1 ? 'speler' : 'spelers'}`;
+                    card.appendChild(label);
+
+                    const list = document.createElement('ul');
+                    list.className = 'space-y-1';
+                    team.forEach(name => {
+                        const li = document.createElement('li');
+                        li.className = 'text-[15px] font-medium';
+                        li.textContent = name;
+                        list.appendChild(li);
+                    });
+                    card.appendChild(list);
+
+                    output.appendChild(card);
+                });
+            }
+
+            function renderMessage(text) {
+                output.innerHTML = '';
+                const p = document.createElement('p');
+                p.className = 'font-mono text-[11px] tracking-wide font-semibold text-muted';
+                p.textContent = text;
+                output.appendChild(p);
+            }
+        })();
+    </script>
 </body>
 
 </html>
