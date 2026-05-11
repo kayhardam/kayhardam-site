@@ -52,11 +52,17 @@
                 <label for="names-input" class="block font-mono text-[11px] tracking-wide font-semibold mb-2">
                     namen
                 </label>
+                <p class="text-[14px] leading-[1.5] text-muted font-medium mb-2.5 max-w-[520px]">
+                    Eén naam per regel. Plak gerust een hele lijst — lege regels worden genegeerd.
+                </p>
                 <textarea
                     id="names-input"
                     rows="8"
-                    placeholder="één naam per regel&#10;bv:&#10;daan&#10;noor&#10;jesse"
+                    placeholder="daan&#10;noor&#10;jesse&#10;..."
                     class="w-full border-2 border-fg p-4 text-[15px] font-medium font-sans bg-bg"></textarea>
+                <div class="mt-2 font-mono text-[11px] tracking-wide font-semibold text-muted">
+                    <span id="names-count">0</span> namen herkend
+                </div>
             </div>
 
             {{-- houd uit elkaar --}}
@@ -64,10 +70,13 @@
                 <label for="apart-input" class="block font-mono text-[11px] tracking-wide font-semibold mb-2">
                     houd uit elkaar <span class="text-muted font-normal">(optioneel)</span>
                 </label>
+                <p class="text-[14px] leading-[1.5] text-muted font-medium mb-2.5 max-w-[520px]">
+                    Twee namen per regel, gescheiden door een komma. Bijvoorbeeld: <span class="font-mono">daan, noor</span>
+                </p>
                 <textarea
                     id="apart-input"
                     rows="4"
-                    placeholder="paren die niet samen mogen, één per regel&#10;bv:&#10;daan, noor&#10;jesse, sam"
+                    placeholder="daan, noor&#10;jesse, sam"
                     class="w-full border-2 border-fg p-4 text-[15px] font-medium font-sans bg-bg"></textarea>
             </div>
 
@@ -95,7 +104,11 @@
         </div>
 
         {{-- output --}}
-        <div id="teams-output" class="mt-10 space-y-4"></div>
+        {{-- output --}}
+        <div class="mt-14 pt-7 border-t border-divider">
+            <div class="font-mono text-[11px] tracking-wide font-semibold text-muted mb-4">resultaat</div>
+            <div id="teams-output" class="space-y-4"></div>
+        </div>
 
         {{-- Footer --}}
         <footer class="mt-[60px] pt-[22px] border-t-2 border-fg flex justify-between items-center font-mono text-[11px] text-muted font-bold">
@@ -116,6 +129,19 @@
             const teamsInput = document.getElementById('teams-input');
             const shuffleBtn = document.getElementById('shuffle-button');
             const output = document.getElementById('teams-output');
+
+            const namesCountEl = document.getElementById('names-count');
+
+            function updateNamesCount() {
+                const count = namesInput.value
+                    .split('\n')
+                    .map(n => n.trim())
+                    .filter(n => n.length > 0).length;
+                namesCountEl.textContent = count;
+            }
+
+            namesInput.addEventListener('input', updateNamesCount);
+            updateNamesCount(); // initial render
 
             shuffleBtn.addEventListener('click', () => {
                 // 1. parse namen
