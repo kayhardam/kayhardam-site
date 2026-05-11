@@ -59,6 +59,18 @@
                     class="w-full border-2 border-fg p-4 text-[15px] font-medium font-sans bg-bg"></textarea>
             </div>
 
+            {{-- houd uit elkaar --}}
+            <div>
+                <label for="apart-input" class="block font-mono text-[11px] tracking-wide font-semibold mb-2">
+                    houd uit elkaar <span class="text-muted font-normal">(optioneel)</span>
+                </label>
+                <textarea
+                    id="apart-input"
+                    rows="4"
+                    placeholder="paren die niet samen mogen, één per regel&#10;bv:&#10;daan, noor&#10;jesse, sam"
+                    class="w-full border-2 border-fg p-4 text-[15px] font-medium font-sans bg-bg"></textarea>
+            </div>
+
             {{-- aantal teams --}}
             <div>
                 <label for="teams-input" class="block font-mono text-[11px] tracking-wide font-semibold mb-2">
@@ -100,12 +112,13 @@
     <script>
         (function() {
             const namesInput = document.getElementById('names-input');
+            const apartInput = document.getElementById('apart-input');
             const teamsInput = document.getElementById('teams-input');
             const shuffleBtn = document.getElementById('shuffle-button');
             const output = document.getElementById('teams-output');
 
             shuffleBtn.addEventListener('click', () => {
-                // 1. parse namen — split op regels, trim, filter lege
+                // 1. parse namen
                 const names = namesInput.value
                     .split('\n')
                     .map(n => n.trim())
@@ -113,28 +126,71 @@
 
                 const teamCount = parseInt(teamsInput.value, 10);
 
-                // 2. validatie
+                // 2. parse constraints — paren die uit elkaar moeten
+                const constraints = apartInput.value
+                    .split('\n')
+                    .map(line => line.split(',').map(n => n.trim().toLowerCase()).filter(n => n.length > 0))
+                    .filter(pair => pair.length === 2);
+
+                // 3. validatie
                 if (names.length < 2) return renderMessage('Voeg minimaal 2 namen toe.');
                 if (teamCount < 2) return renderMessage('Minimaal 2 teams.');
                 if (names.length < teamCount) return renderMessage('Niet genoeg namen voor dit aantal teams.');
 
-                // 3. Fisher-Yates shuffle
+                // check: namen in constraints moeten ook in de namen-lijst staan
+                const namesLower = names.map(n => n.toLowerCase());
+                const unknown = [];
+                constraints.forEach(pair => pair.forEach(n => {
+                    if (!namesLower.includes(n) && !unknown.includes(n)) unknown.push(n);
+                }));
+                if (unknown.length > 0) {
+                    return renderMessage(`Onbekend in 'houd uit elkaar': ${unknown.join(', ')}`);
+                }
+
+                // 4. shuffle-retry tot constraints kloppen
+                const maxAttempts = 100;
+                let teams = null;
+
+                for (let attempt = 0; attempt < maxAttempts; attempt++) {
+                    const candidate = makeTeams(names, teamCount);
+                    if (constraintsSatisfied(candidate, constraints)) {
+                        teams = candidate;
+                        break;
+                    }
+                }
+
+                if (!teams) {
+                    return renderMessage('Kon geen verdeling vinden die alle paren uit elkaar houdt. Probeer meer teams of minder paren.');
+                }
+
+                renderTeams(teams);
+            });
+
+            function makeTeams(names, teamCount) {
+                // Fisher-Yates shuffle
                 const shuffled = [...names];
                 for (let i = shuffled.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
                 }
-
-                // 4. verdeel round-robin over teams
+                // round-robin verdeling
                 const teams = Array.from({
                     length: teamCount
                 }, () => []);
                 shuffled.forEach((name, idx) => {
                     teams[idx % teamCount].push(name);
                 });
+                return teams;
+            }
 
-                renderTeams(teams);
-            });
+            function constraintsSatisfied(teams, constraints) {
+                return constraints.every(([a, b]) => {
+                    return !teams.some(team => {
+                        const lowered = team.map(n => n.toLowerCase());
+                        return lowered.includes(a) && lowered.includes(b);
+                    });
+                });
+            }
 
             function renderTeams(teams) {
                 output.innerHTML = '';
