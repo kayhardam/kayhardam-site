@@ -14,3 +14,5 @@ Route::get('/notes/{slug}', function (string $slug) {
 
     return view('note', ['note' => $note]);
 });
+
+Route::view('/tools/team-shuffler', 'tools.team-shuffler')->name('tools.team-shuffler');
