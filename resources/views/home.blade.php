@@ -81,9 +81,17 @@
             <span class="inline-block bg-accent font-mono text-[11px] font-bold tracking-wide px-2.5 py-1 mb-3.5">02 / tools</span>
             <h2 class="text-[38px] font-extrabold tracking-[-0.03em] leading-none mb-2">wat ik bouw</h2>
             <p class="text-sm leading-[1.55] text-muted font-medium max-w-[520px] mb-7">Kleine open-source apps. Gebouwd in het openbaar.</p>
-            <p class="text-[15px] leading-[1.65] font-medium max-w-[560px]">
-                Eerste apps zijn in aanbouw. Verschijnen hier als ze werken — volg ze ondertussen op <a href="https://github.com/kayhardam" class="font-bold underline decoration-2 underline-offset-[3px]">github</a>.
-            </p>
+            <article class="grid grid-cols-[64px_1fr] gap-5 py-5 items-start">
+                <div class="font-mono text-xs text-muted font-bold pt-1">01</div>
+                <div>
+                    <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
+                        <a href="/tools/team-shuffler" class="hover:underline decoration-2 underline-offset-[3px]">team-shuffler</a>
+                    </h3>
+                    <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
+                        Plak namen, kies aantal teams, klaar. Met optie om paren uit elkaar te houden — handig voor klassen waar bepaalde leerlingen even niet samen kunnen.
+                    </div>
+                </div>
+            </article>
         </section>
 
         {{-- 03 / field notes --}}
