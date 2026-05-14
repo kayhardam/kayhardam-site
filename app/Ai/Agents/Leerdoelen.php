@@ -14,7 +14,7 @@ use Stringable;
 #[Model('claude-haiku-4-5')]
 #[MaxTokens(400)]
 #[Temperature(0.7)]
-class LessonGoals implements Agent, HasStructuredOutput
+class Leerdoelen implements Agent, HasStructuredOutput
 {
     use Promptable;
 
