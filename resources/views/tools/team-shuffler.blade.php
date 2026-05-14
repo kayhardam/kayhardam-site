@@ -64,13 +64,18 @@
                 class="w-24 border-2 border-fg p-3 text-[15px] font-medium font-sans bg-bg">
         </div>
 
-        {{-- submit --}}
-        <button
-            type="button"
-            id="shuffle-button"
-            class="bg-accent text-fg px-[22px] py-3 text-sm font-bold tracking-tight cursor-pointer transition-colors hover:bg-accent-hover">
-            maak teams →
-        </button>
+        {{-- submit + privacy --}}
+        <div>
+            <button
+                type="button"
+                id="shuffle-button"
+                class="bg-accent text-fg px-[22px] py-3 text-sm font-bold tracking-tight cursor-pointer transition-colors hover:bg-accent-hover">
+                maak teams →
+            </button>
+            <p class="mt-3 font-mono text-[11px] tracking-wide font-medium text-muted leading-[1.6] max-w-[520px]">
+                Namen blijven in je browser. Niks gaat weg. Niks wordt bewaard.
+            </p>
+        </div>
     </div>
 
     {{-- output --}}

@@ -58,12 +58,17 @@
             </div>
         </div>
 
-        {{-- submit --}}
-        <button
-            type="submit"
-            class="bg-accent text-fg px-[22px] py-3 text-sm font-bold tracking-tight cursor-pointer transition-colors hover:bg-accent-hover">
-            genereer leerdoelen →
-        </button>
+        {{-- submit + privacy --}}
+        <div>
+            <button
+                type="submit"
+                class="bg-accent text-fg px-[22px] py-3 text-sm font-bold tracking-tight cursor-pointer transition-colors hover:bg-accent-hover">
+                genereer leerdoelen →
+            </button>
+            <p class="mt-3 font-mono text-[11px] tracking-wide font-medium text-muted leading-[1.6] max-w-[520px]">
+                Wat je typt wordt verstuurd naar Claude (van Anthropic) voor het maken van de leerdoelen. Anthropic gebruikt dit niet om hun AI te trainen. Wij bewaren niets aan onze kant.
+            </p>
+        </div>
     </form>
 
     {{-- error van generator (API faalt, etc.) --}}
