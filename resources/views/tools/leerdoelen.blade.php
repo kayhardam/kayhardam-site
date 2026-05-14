@@ -66,7 +66,29 @@
         </button>
     </form>
 
-    {{-- output placeholder (gevuld in volgende stap) --}}
+    {{-- error van generator (API faalt, etc.) --}}
+    @if ($errors->has('generator'))
+    <div class="mt-7 border-2 border-fg p-5">
+        <div class="font-mono text-[11px] tracking-wide font-semibold text-muted mb-2">er ging iets mis</div>
+        <p class="text-[15px] leading-[1.6] font-medium">{{ $errors->first('generator') }}</p>
+    </div>
+    @endif
+
+    {{-- output: drie leerdoelen --}}
+    @if (session('leerdoelen'))
+    <div class="mt-14 pt-7 border-t border-divider">
+        <div class="font-mono text-[11px] tracking-wide font-semibold text-muted mb-4">drie leerdoelen</div>
+
+        <div class="space-y-4">
+            @foreach (['motorisch' => 'motorisch', 'sociaal_affectief' => 'sociaal-affectief', 'cognitief' => 'cognitief'] as $key => $label)
+            <article class="border-2 border-fg p-5">
+                <div class="font-mono text-[11px] tracking-wide font-semibold text-muted mb-3">{{ $label }}</div>
+                <p class="text-[15px] leading-[1.6] font-medium">{{ session('leerdoelen')[$key] }}</p>
+            </article>
+            @endforeach
+        </div>
+    </div>
+    @endif
 
     <x-footer />
 
