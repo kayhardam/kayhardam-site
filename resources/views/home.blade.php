@@ -32,10 +32,10 @@
         <h2 class="text-[38px] font-extrabold tracking-[-0.03em] leading-none mb-2">de docent achter de tools</h2>
         <p class="text-sm leading-[1.55] text-muted font-medium max-w-[520px] mb-7">Waarom deze site bestaat — en voor wie.</p>
         <p class="text-[15px] leading-[1.65] font-medium max-w-[560px] mb-3.5">
-            Vakleerkracht sport in het voortgezet speciaal onderwijs. Ik werk dagelijks met jongeren met complexe gedragsvragen bij RENN4. Mijn werk gaat over één ding: een veilige, voorspelbare plek waar sport iets in gang kan zetten.
+            Vakleerkracht sport in het VSO bij RENN4. In mijn lessen staat plezier centraal. Relatie, structuur en voorspelbaarheid zijn daarvoor de basis.
         </p>
         <p class="text-[15px] leading-[1.65] font-medium max-w-[560px]">
-            Deze site is de andere helft. De apps zijn mijn eigen oefening in design en development met AI. Sport-tools — omdat sport mijn vak is.
+            Deze site is de andere helft. De apps zijn mijn eigen oefening in design en development met AI. Sport-tools — omdat dat is wat ik elke dag doe.
         </p>
     </section>
 
