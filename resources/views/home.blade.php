@@ -55,6 +55,17 @@
                 </div>
             </div>
         </article>
+        <article class="grid grid-cols-[64px_1fr] gap-5 py-5 items-start border-t border-divider">
+            <div class="font-mono text-xs text-muted font-bold pt-1">02</div>
+            <div>
+                <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
+                    <a href="/tools/leerdoelen" class="hover:underline decoration-2 underline-offset-[3px]">leerdoelen-generator</a>
+                </h3>
+                <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
+                    Beschrijf de activiteit, kies niveau, krijg drie leerdoelen — motorisch, sociaal-affectief, cognitief. Springplank voor lesvoorbereiding.
+                </div>
+            </div>
+        </article>
     </section>
 
     {{-- 03 / field notes --}}
