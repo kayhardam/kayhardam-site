@@ -19,12 +19,13 @@ Status per note: **idee** → **klad** → **live**.
 - **kern:** `FieldNotes` class parseert op datum-prefix in filename. Geen frontmatter, geen YAML, geen Eloquent.
 - **haak:** Waarom een database als je één type content hebt en zelf de auteur bent?
 
-## 3. Teams shuffelen met een VSO-twist
+## 3. Voornamen die nergens heen kunnen
 
-- **slug:** `teams-shuffelen-met-vso-twist`
-- **status:** idee
-- **kern:** Fisher-Yates in vanilla JS plus een "houd uit elkaar"-constraint voor de VSO-praktijk. Geen backend.
-- **haak:** Het generieke algoritme dat domein-knowledge in zich draagt.
+- **slug:** `Voornamen die nergens heen kunnen`
+- **status:** live (15 mei 2026)
+- **kern:** De Team-shuffler vraagt om voornamen, dus alles draait client-side. Geen backend, geen storage, geen log. Fisher-Yates + VSO-constraint als feature-detail.
+- **haak:** De eerste drempel voor een leerkracht is niet de werking maar wat hij moet invullen.
+  Titel, slug, status, kern én haak veranderen allemaal — de hoek
 
 ## 4. Pest tegen Vite
 
