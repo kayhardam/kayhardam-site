@@ -79,7 +79,7 @@
     </div>
 
     {{-- output --}}
-    <div class="mt-14 pt-7 border-t border-divider">
+    <div id="teams-result" class="hidden mt-14 pt-7 border-t border-divider">
         <div class="font-mono text-[11px] tracking-wide font-semibold text-muted mb-4">resultaat</div>
         <div id="teams-output" class="space-y-4"></div>
     </div>
@@ -93,6 +93,7 @@
             const teamsInput = document.getElementById('teams-input');
             const shuffleBtn = document.getElementById('shuffle-button');
             const output = document.getElementById('teams-output');
+            const result = document.getElementById('teams-result');
             const namesCountEl = document.getElementById('names-count');
 
             function updateNamesCount() {
@@ -175,6 +176,7 @@
             }
 
             function renderTeams(teams) {
+                result.classList.remove('hidden');
                 output.innerHTML = '';
                 teams.forEach((team, i) => {
                     const card = document.createElement('div');
@@ -200,6 +202,7 @@
             }
 
             function renderMessage(text) {
+                result.classList.remove('hidden');
                 output.innerHTML = '';
                 const p = document.createElement('p');
                 p.className = 'font-mono text-[11px] tracking-wide font-semibold text-muted';
