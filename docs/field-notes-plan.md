@@ -9,7 +9,7 @@ Status per note: **idee** → **klad** → **live**.
 ## 1. Van nul tot live in één dag
 
 - **slug:** `van-nul-tot-live`
-- **status:** live (9 mei 2026)
+- **status:** live (15 mei 2026)
 - **kern:** Laravel 13 + Blade + Tailwind v4 + Vite, deploy op Laravel Cloud, geen DB.
 
 ## 2. Markdown als database
