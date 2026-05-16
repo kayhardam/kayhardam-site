@@ -5,6 +5,7 @@ namespace App\Support;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class FieldNotes
 {
@@ -38,6 +39,9 @@ class FieldNotes
 
         return [
             'date' => substr($filename, 0, 10),
+            'date_formatted' => Carbon::parse(substr($filename, 0, 10))
+                ->locale('nl')
+                ->isoFormat('D MMMM YYYY'),
             'slug' => substr($filename, 11),
             'title' => ltrim($title, '# '),
             'description' => Str::limit($firstParagraph, 160),
