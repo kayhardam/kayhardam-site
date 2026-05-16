@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Symfony\Component\Finder\SplFileInfo;
 
 class FieldNotes
 {
@@ -28,7 +29,7 @@ class FieldNotes
         return self::all()->firstWhere('slug', $slug);
     }
 
-    private static function parse($file): array
+    private static function parse(SplFileInfo $file): array
     {
         $content = file_get_contents($file->getPathname());
         [$title, $body] = array_pad(explode("\n\n", $content, 2), 2, '');
