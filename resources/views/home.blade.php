@@ -59,11 +59,10 @@
             <div class="font-mono text-xs text-muted font-bold pt-1">02</div>
             <div>
                 <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
-                    <a href="/tools/leerdoelen" class="hover:underline decoration-2 underline-offset-[3px]">leerdoelen-generator</a>
-                </h3>
-                <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
-                    Beschrijf de activiteit, kies niveau, krijg drie leerdoelen — motorisch, sociaal-affectief, cognitief. Springplank voor lesvoorbereiding.
-                </div>
+                    <a href="/tools/leerdoelen" class="hover:underline decoration-2 underline-offset-[3px]">leerdoel-coach</a>
+                    <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
+                        Bouwt een leerdoel via de GIVC-structuur — gedrag, inhoud, voorwaarden, criteria. Coach, geen generator.
+                    </div>
             </div>
         </article>
     </section>

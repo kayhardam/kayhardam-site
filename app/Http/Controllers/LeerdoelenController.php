@@ -11,7 +11,7 @@ use Throwable;
 class LeerdoelenController
 {
     /**
-     * Toon het formulier voor de leerdoelen-generator.
+     * Toon het formulier voor de leerdoelen-coach.
      */
     public function show(): View
     {
