@@ -1,100 +1,131 @@
-<x-layout
-    title="leerdoelen-generator — kay hardam"
-    description="Genereer drie leerdoelen (motorisch, sociaal-affectief, cognitief) op basis van een activiteit en doelgroep. Open-source tool voor ALO-studenten."
-    path="/tools/leerdoelen">
+<x-layout title="Leerdoel-coach">
+    @php
+    $activiteiten = config('beweegactiviteiten.activiteiten');
+    $nietWaarneembaar = config('beweegactiviteiten.niet_waarneembaar');
+    @endphp
 
-    <x-nav />
+    <main class="mx-auto max-w-2xl px-6 py-12">
 
-    {{-- Back to tools --}}
-    <a href="/#tools" class="font-mono text-[11px] tracking-wide font-semibold text-muted hover:text-fg mb-6 inline-block">← tools</a>
+        <header class="mb-12">
+            <p class="text-xs font-mono uppercase tracking-wider text-[#6b6b6b] mb-4">tool / leerdoel-coach</p>
+            <h1 class="text-3xl font-medium lowercase text-[#0f0f0f]">leerdoel-coach</h1>
+            <p class="mt-3 text-[#6b6b6b]">Stap voor stap tot een didactisch onderbouwd leerdoel volgens de GIVC-structuur.</p>
+        </header>
 
-    {{-- Tool header --}}
-    <span class="inline-block bg-accent font-mono text-[11px] font-bold tracking-wide px-2.5 py-1 mb-3.5">tool / leerdoelen</span>
-    <h1 class="text-[48px] md:text-[64px] font-extrabold tracking-[-0.045em] leading-[0.9] mb-4">leerdoelen-generator</h1>
-    <p class="text-[17px] leading-[1.5] max-w-[520px] mb-10 font-medium">
-        Drie leerdoelen op basis van een activiteit en doelgroep. Springplank, geen eindproduct.
-    </p>
+        <div
+            x-data="leerdoelCoach({ activiteiten: {{ Js::from($activiteiten) }}, nietWaarneembaar: {{ Js::from($nietWaarneembaar) }} })"
+            x-cloak
+            class="space-y-8">
 
-    {{-- Tool UI --}}
-    <form method="POST" action="{{ route('tools.leerdoelen.generate') }}" class="space-y-7">
-        @csrf
+            <div class="flex items-center justify-between text-xs font-mono text-[#6b6b6b]">
+                <span x-text="`stap ${step} van 6`"></span>
+                <span x-text="stepLabels[step - 1]"></span>
+            </div>
 
-        {{-- activiteit & doelgroep --}}
-        <div>
-            <label for="activiteit-input" class="block font-mono text-[11px] tracking-wide font-semibold mb-2">
-                activiteit & context
-            </label>
-            <p class="text-[14px] leading-[1.5] text-muted font-medium mb-2.5 max-w-[520px]">
-                Beschrijf kort wat je gaat doen en met welke groep. <strong class="font-semibold">Geen leerlingnamen</strong> — gebruik "een leerling die..." of "de groep".
-            </p>
-            <textarea
-                id="activiteit-input"
-                name="activiteit"
-                rows="4"
-                placeholder="bijvoorbeeld: estafette in 4 teams, 45 minuten gymzaal"
-                class="w-full border-2 border-fg p-4 text-[15px] font-medium font-sans bg-bg"
-                required>{{ old('activiteit') }}</textarea>
-        </div>
+            <section x-show="step === 1" class="space-y-6">
+                <h2 class="text-xl font-medium lowercase">context</h2>
+                <div>
+                    <label class="block text-xs font-mono uppercase tracking-wider text-[#6b6b6b] mb-2">groep / leerjaar</label>
+                    <input type="text" x-model="context.groep" placeholder="bv. groep 4"
+                        class="w-full bg-transparent border-b border-[#e5e0d5] py-2 focus:outline-none focus:border-[#0f0f0f]">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono uppercase tracking-wider text-[#6b6b6b] mb-2">activiteit</label>
+                    <select x-model="context.activiteit"
+                        class="w-full bg-transparent border-b border-[#e5e0d5] py-2 focus:outline-none focus:border-[#0f0f0f]">
+                        <option value="">— kies een activiteit —</option>
+                        <template x-for="(act, key) in activiteiten" :key="key">
+                            <option :value="key" x-text="act.naam"></option>
+                        </template>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono uppercase tracking-wider text-[#6b6b6b] mb-2">type doel</label>
+                    <div class="flex gap-2">
+                        <template x-for="t in ['reeksdoel', 'lesdoel']" :key="t">
+                            <button type="button" @click="context.type = t"
+                                :class="context.type === t ? 'bg-[#ffe54b] border-[#0f0f0f]' : 'border-[#e5e0d5]'"
+                                class="px-4 py-2 text-sm border lowercase" x-text="t"></button>
+                        </template>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono uppercase tracking-wider text-[#6b6b6b] mb-2">domein</label>
+                    <div class="flex flex-wrap gap-2">
+                        <template x-for="d in ['motorisch', 'cognitief', 'sociaal-emotioneel']" :key="d">
+                            <button type="button" @click="context.domein = d"
+                                :class="context.domein === d ? 'bg-[#ffe54b] border-[#0f0f0f]' : 'border-[#e5e0d5]'"
+                                class="px-4 py-2 text-sm border lowercase" x-text="d"></button>
+                        </template>
+                    </div>
+                </div>
+            </section>
 
-        {{-- niveau --}}
-        <div>
-            <label class="block font-mono text-[11px] tracking-wide font-semibold mb-2">
-                niveau
-            </label>
-            <div class="flex gap-2 flex-wrap">
-                @foreach (['PO', 'VO', 'VSO'] as $niveau)
-                <label class="cursor-pointer">
-                    <input
-                        type="radio"
-                        name="niveau"
-                        value="{{ $niveau }}"
-                        class="sr-only peer"
-                        {{ old('niveau', 'PO') === $niveau ? 'checked' : '' }}>
-                    <span class="inline-block border-2 border-fg px-5 py-2.5 text-[14px] font-medium peer-checked:bg-fg peer-checked:text-bg transition-colors">
-                        {{ $niveau }}
-                    </span>
-                </label>
-                @endforeach
+            <section x-show="step === 2" class="space-y-6">
+                <h2 class="text-xl font-medium lowercase">gedrag</h2>
+                <p class="text-sm text-[#6b6b6b]">Welk actief, waarneembaar werkwoord beschrijft wat de leerling doet?</p>
+                <input type="text" x-model="gedrag" placeholder="bv. afzetten"
+                    class="w-full bg-transparent border-b border-[#e5e0d5] py-2 focus:outline-none focus:border-[#0f0f0f]">
+                <div x-show="suggesties().length">
+                    <p class="text-xs font-mono uppercase tracking-wider text-[#6b6b6b] mb-2">suggesties</p>
+                    <div class="flex flex-wrap gap-2">
+                        <template x-for="w in suggesties()" :key="w">
+                            <button type="button" @click="gedrag = w"
+                                class="px-3 py-1 text-sm border border-[#e5e0d5] hover:bg-[#ffe54b] hover:border-[#0f0f0f]"
+                                x-text="w"></button>
+                        </template>
+                    </div>
+                </div>
+                <p class="text-sm text-[#6b6b6b]"><span class="font-mono text-xs uppercase tracking-wider">niet waarneembaar:</span> <span x-text="nietWaarneembaar.join(', ')"></span></p>
+            </section>
+
+            <section x-show="step === 3" class="space-y-6">
+                <h2 class="text-xl font-medium lowercase">inhoud</h2>
+                <p class="text-sm text-[#6b6b6b]">Wat is de inhoud, zo concreet mogelijk? Welk lichaamsdeel, materiaal, beweegonderdeel?</p>
+                <input type="text" x-model="inhoud" placeholder="bv. met twee voeten"
+                    class="w-full bg-transparent border-b border-[#e5e0d5] py-2 focus:outline-none focus:border-[#0f0f0f]">
+            </section>
+
+            <section x-show="step === 4" class="space-y-6">
+                <h2 class="text-xl font-medium lowercase">voorwaarden</h2>
+                <p class="text-sm text-[#6b6b6b]">Onder welke voorwaarden? Aanloop, ondergrond, hulpmiddel, groepering?</p>
+                <input type="text" x-model="voorwaarden" placeholder="bv. uit een aanloop, in de trampoline"
+                    class="w-full bg-transparent border-b border-[#e5e0d5] py-2 focus:outline-none focus:border-[#0f0f0f]">
+            </section>
+
+            <section x-show="step === 5" class="space-y-6">
+                <h2 class="text-xl font-medium lowercase">criteria</h2>
+                <p class="text-sm text-[#6b6b6b]">Welke minimale prestatie is 'het lukt'?</p>
+                <input type="text" x-model="criteria" placeholder="bv. gehurkt over een kast, landing op twee voeten"
+                    class="w-full bg-transparent border-b border-[#e5e0d5] py-2 focus:outline-none focus:border-[#0f0f0f]">
+            </section>
+
+            <section x-show="step === 6" class="space-y-6">
+                <h2 class="text-xl font-medium lowercase">jouw leerdoel</h2>
+                <div class="bg-[#f1ede0] p-6 text-lg leading-relaxed">
+                    <span x-text="dummyZin()"></span>
+                </div>
+                <div class="space-y-2 pt-4 border-t border-[#e5e0d5]">
+                    <p class="text-xs font-mono uppercase tracking-wider text-[#6b6b6b] mb-2">componenten</p>
+                    <div class="grid grid-cols-[24px_1fr] gap-x-3 gap-y-1 text-sm">
+                        <span class="font-mono text-[#6b6b6b]">G</span><span x-text="gedrag || '—'"></span>
+                        <span class="font-mono text-[#6b6b6b]">I</span><span x-text="inhoud || '—'"></span>
+                        <span class="font-mono text-[#6b6b6b]">V</span><span x-text="voorwaarden || '—'"></span>
+                        <span class="font-mono text-[#6b6b6b]">C</span><span x-text="criteria || '—'"></span>
+                    </div>
+                </div>
+                <p class="text-xs font-mono text-[#6b6b6b]">— synthese komt straks van claude —</p>
+            </section>
+
+            <div class="flex justify-between pt-8 border-t border-[#e5e0d5]">
+                <button type="button" @click="prev()" x-show="step > 1"
+                    class="px-4 py-2 text-sm border border-[#e5e0d5] hover:bg-[#f1ede0]">vorige</button>
+                <span x-show="step === 1"></span>
+                <button type="button" @click="next()" x-show="step < 6"
+                    class="px-4 py-2 text-sm border border-[#0f0f0f] bg-[#ffe54b] hover:bg-[#0f0f0f] hover:text-[#fcfaf4]">volgende</button>
+                <button type="button" @click="reset()" x-show="step === 6"
+                    class="px-4 py-2 text-sm border border-[#e5e0d5] hover:bg-[#f1ede0]">opnieuw beginnen</button>
             </div>
         </div>
-
-        {{-- submit + privacy --}}
-        <div>
-            <button
-                type="submit"
-                class="bg-accent text-fg px-[22px] py-3 text-sm font-bold tracking-tight cursor-pointer transition-colors hover:bg-accent-hover">
-                genereer leerdoelen →
-            </button>
-            <p class="mt-3 font-mono text-[11px] tracking-wide font-medium text-muted leading-[1.6] max-w-[520px]">
-                Wat je typt wordt verstuurd naar Claude (van Anthropic) voor het maken van de leerdoelen. Anthropic gebruikt dit niet om hun AI te trainen. Wij bewaren niets aan onze kant.
-            </p>
-        </div>
-    </form>
-
-    {{-- error van generator (API faalt, etc.) --}}
-    @if ($errors->has('generator'))
-    <div class="mt-7 border-2 border-fg p-5">
-        <div class="font-mono text-[11px] tracking-wide font-semibold text-muted mb-2">er ging iets mis</div>
-        <p class="text-[15px] leading-[1.6] font-medium">{{ $errors->first('generator') }}</p>
-    </div>
-    @endif
-
-    {{-- output: drie leerdoelen --}}
-    @if (session('leerdoelen'))
-    <div class="mt-14 pt-7 border-t border-divider">
-        <div class="font-mono text-[11px] tracking-wide font-semibold text-muted mb-4">drie leerdoelen</div>
-
-        <div class="space-y-4">
-            @foreach (['motorisch' => 'motorisch', 'sociaal_affectief' => 'sociaal-affectief', 'cognitief' => 'cognitief'] as $key => $label)
-            <article class="border-2 border-fg p-5">
-                <div class="font-mono text-[11px] tracking-wide font-semibold text-muted mb-3">{{ $label }}</div>
-                <p class="text-[15px] leading-[1.6] font-medium">{{ session('leerdoelen')[$key] }}</p>
-            </article>
-            @endforeach
-        </div>
-    </div>
-    @endif
-
-    <x-footer />
-
+    </main>
 </x-layout>
