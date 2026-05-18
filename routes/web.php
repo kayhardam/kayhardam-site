@@ -27,3 +27,9 @@ Route::get('/sitemap.xml', function () {
         ->view('sitemap', ['notes' => FieldNotes::all()])
         ->header('Content-Type', 'application/xml');
 });
+
+Route::get('/feed.xml', function () {
+    return response()
+        ->view('feed', ['notes' => FieldNotes::all()])
+        ->header('Content-Type', 'application/rss+xml; charset=UTF-8');
+});
