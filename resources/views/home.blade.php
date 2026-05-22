@@ -60,9 +60,10 @@
             <div>
                 <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
                     <a href="/tools/leerdoelen" class="hover:underline decoration-2 underline-offset-[3px]">leerdoel-coach</a>
-                    <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
-                        Bouwt een leerdoel via de GIVC-structuur — gedrag, inhoud, voorwaarden, criteria. Coach, geen generator.
-                    </div>
+                </h3>
+                <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
+                    Bouwt een leerdoel via de GIVC-structuur — gedrag, inhoud, voorwaarden, criteria. Coach, geen generator.
+                </div>
             </div>
         </article>
     </section>
