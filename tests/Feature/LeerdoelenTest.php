@@ -6,41 +6,110 @@ beforeEach(function () {
     cache()->flush();
 });
 
-it('genereert drie leerdoelen bij geldige input', function () {
-    Leerdoelen::fake();
+function validLeerdoelenPayload(array $overrides = []): array
+{
+    return array_replace_recursive([
+        'context' => [
+            'groep' => 'Groep 5, 24 leerlingen',
+            'activiteit' => 'springen_kast',
+            'type' => 'lesdoel',
+            'domein' => 'motorisch',
+        ],
+        'gedrag' => 'afzetten en landen',
+        'inhoud' => 'kastsprong met spreidbeweging',
+        'voorwaarden' => 'lage kast, matje, op tempo van klap',
+        'criteria' => '8 van 10 sprongen in hurkzit landen',
+    ], $overrides);
+}
 
-    $response = $this->post(route('tools.leerdoelen.generate'), [
-        'activiteit' => 'Basketbal: pivoteren en passeren in tweetallen',
-        'niveau' => 'VO',
+it('synthetiseert één leerdoel-zin bij geldige wizard-input', function () {
+    Leerdoelen::fake(['De leerling zet af met twee voeten en landt in een hurkzit.']);
+
+    $response = $this->postJson(
+        route('tools.leerdoelen.synthesize'),
+        validLeerdoelenPayload(),
+    );
+
+    $response->assertOk();
+    $response->assertExactJson([
+        'leerdoel' => 'De leerling zet af met twee voeten en landt in een hurkzit.',
     ]);
 
-    $response->assertRedirect();
-    $response->assertSessionHas('leerdoelen');
-
-    Leerdoelen::assertPrompted(fn($prompt) => str_contains($prompt->prompt, 'Niveau: VO'));
+    Leerdoelen::assertPrompted(
+        fn ($prompt) => str_contains($prompt->prompt, 'groep: Groep 5, 24 leerlingen')
+            && str_contains($prompt->prompt, 'gedrag: afzetten en landen')
+            && str_contains($prompt->prompt, 'criteria: 8 van 10 sprongen in hurkzit landen'),
+    );
 });
 
-it('weigert lege input met validatiefouten', function () {
+it('valideert alle acht verplichte velden bij lege input', function () {
     Leerdoelen::fake();
 
-    $response = $this->post(route('tools.leerdoelen.generate'), []);
+    $response = $this->postJson(route('tools.leerdoelen.synthesize'), []);
 
-    $response->assertSessionHasErrors(['activiteit', 'niveau']);
+    $response->assertStatus(422);
+    $response->assertInvalid([
+        'context.groep',
+        'context.activiteit',
+        'context.type',
+        'context.domein',
+        'gedrag',
+        'inhoud',
+        'voorwaarden',
+        'criteria',
+    ]);
+
+    Leerdoelen::assertNeverPrompted();
+});
+
+it('weigert onbekende activiteit en buiten-enum waarden', function () {
+    Leerdoelen::fake();
+
+    $response = $this->postJson(
+        route('tools.leerdoelen.synthesize'),
+        validLeerdoelenPayload([
+            'context' => [
+                'activiteit' => 'onbekend',
+                'type' => 'jaardoel',
+                'domein' => 'fysiek',
+            ],
+        ]),
+    );
+
+    $response->assertStatus(422);
+    $response->assertInvalid([
+        'context.activiteit',
+        'context.type',
+        'context.domein',
+    ]);
+
+    Leerdoelen::assertNeverPrompted();
+});
+
+it('geeft 500 JSON-error wanneer de agent faalt', function () {
+    Leerdoelen::fake(fn () => throw new \RuntimeException('boom'));
+
+    $response = $this->postJson(
+        route('tools.leerdoelen.synthesize'),
+        validLeerdoelenPayload(),
+    );
+
+    $response->assertStatus(500);
+    $response->assertExactJson([
+        'error' => 'Er ging iets mis bij het synthetiseren. Probeer het opnieuw.',
+    ]);
 });
 
 it('blokkeert de elfde call binnen een uur per IP', function () {
     Leerdoelen::fake();
 
-    $payload = [
-        'activiteit' => 'Trefbal in groepjes van zes',
-        'niveau' => 'PO',
-    ];
+    $payload = validLeerdoelenPayload();
 
     foreach (range(1, 10) as $i) {
-        $this->post(route('tools.leerdoelen.generate'), $payload)
-            ->assertRedirect();
+        $this->postJson(route('tools.leerdoelen.synthesize'), $payload)
+            ->assertOk();
     }
 
-    $this->post(route('tools.leerdoelen.generate'), $payload)
+    $this->postJson(route('tools.leerdoelen.synthesize'), $payload)
         ->assertStatus(429);
 });
