@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Ai\Agents\Leerdoelen;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Throwable;
 
 class LeerdoelenController
 {
     /**
-     * Toon het formulier voor de leerdoelen-coach.
+     * Toon de leerdoel-coach wizard.
      */
     public function show(): View
     {
@@ -19,34 +20,55 @@ class LeerdoelenController
     }
 
     /**
-     * Verwerk het formulier en genereer drie leerdoelen via de AI-agent.
+     * Synthetiseer één GIVC-leerdoel uit de wizard-inputs.
      */
-    public function generate(Request $request): RedirectResponse
+    public function synthesize(Request $request): JsonResponse
     {
+        $activiteiten = array_keys(config('beweegactiviteiten.activiteiten'));
+
         $validated = $request->validate([
-            'activiteit' => ['required', 'string', 'max:500'],
-            'niveau' => ['required', 'in:PO,VO,VSO'],
+            'context.groep' => ['required', 'string', 'max:50'],
+            'context.activiteit' => ['required', 'string', Rule::in($activiteiten)],
+            'context.type' => ['required', Rule::in(['reeksdoel', 'lesdoel'])],
+            'context.domein' => ['required', Rule::in(['motorisch', 'cognitief', 'sociaal-emotioneel'])],
+            'gedrag' => ['required', 'string', 'max:100'],
+            'inhoud' => ['required', 'string', 'max:200'],
+            'voorwaarden' => ['required', 'string', 'max:200'],
+            'criteria' => ['required', 'string', 'max:200'],
         ]);
 
-        $prompt = sprintf(
-            "%s\n\nNiveau: %s",
-            $validated['activiteit'],
-            $validated['niveau']
-        );
+        $prompt = $this->buildPrompt($validated);
 
         try {
-            /** @var \Laravel\Ai\Responses\StructuredAgentResponse $response */
             $response = (new Leerdoelen)->prompt($prompt);
 
-            return back()
-                ->withInput()
-                ->with('leerdoelen', $response->structured);
+            return response()->json([
+                'leerdoel' => trim($response->text),
+            ]);
         } catch (Throwable $e) {
-            return back()
-                ->withInput()
-                ->withErrors([
-                    'generator' => 'Er ging iets mis bij het genereren. Probeer het opnieuw.',
-                ]);
+            return response()->json([
+                'error' => 'Er ging iets mis bij het synthetiseren. Probeer het opnieuw.',
+            ], 500);
         }
+    }
+
+    /**
+     * Bouw de prompt-payload uit de gevalideerde inputs.
+     */
+    private function buildPrompt(array $data): string
+    {
+        return <<<PROMPT
+        context:
+        - groep: {$data['context']['groep']}
+        - activiteit: {$data['context']['activiteit']}
+        - type: {$data['context']['type']}
+        - domein: {$data['context']['domein']}
+
+        GIVC:
+        - gedrag: {$data['gedrag']}
+        - inhoud: {$data['inhoud']}
+        - voorwaarden: {$data['voorwaarden']}
+        - criteria: {$data['criteria']}
+        PROMPT;
     }
 }

@@ -13,7 +13,9 @@
         </header>
 
         <div
-            x-data="leerdoelCoach({ activiteiten: {{ Js::from($activiteiten) }}, nietWaarneembaar: {{ Js::from($nietWaarneembaar) }} })"
+            x-data="leerdoelCoach({activiteiten: {{ Js::from($activiteiten) }},
+            nietWaarneembaar: {{ Js::from($nietWaarneembaar) }},
+            csrf: '{{ csrf_token() }}'})"
             x-cloak
             class="space-y-8">
 
@@ -102,10 +104,8 @@
 
             <section x-show="step === 6" class="space-y-6">
                 <h2 class="text-xl font-medium lowercase">jouw leerdoel</h2>
-                <div class="bg-divider p-6 text-lg leading-relaxed">
-                    <span x-text="dummyZin()"></span>
-                </div>
-                <div class="space-y-2 pt-4 border-t border-divider">
+
+                <div class="space-y-2">
                     <p class="text-xs font-mono uppercase tracking-wider text-muted mb-2">componenten</p>
                     <div class="grid grid-cols-[24px_1fr] gap-x-3 gap-y-1 text-sm">
                         <span class="font-mono text-muted">G</span><span x-text="gedrag || '—'"></span>
@@ -114,7 +114,21 @@
                         <span class="font-mono text-muted">C</span><span x-text="criteria || '—'"></span>
                     </div>
                 </div>
-                <p class="text-xs font-mono text-muted">— synthese komt straks van claude —</p>
+
+                <div class="pt-4 border-t border-divider">
+                    <button type="button" @click="synthesize()" :disabled="loading"
+                        :class="loading ? 'opacity-50 cursor-not-allowed' : ''"
+                        class="px-4 py-2 text-sm border border-fg bg-accent hover:bg-fg hover:text-bg">
+                        <span x-show="!loading">synthetiseer leerdoel</span>
+                        <span x-show="loading">synthetiseren...</span>
+                    </button>
+                </div>
+
+                <div x-show="leerdoel" class="bg-divider p-6 text-lg leading-relaxed">
+                    <span x-text="leerdoel"></span>
+                </div>
+
+                <div x-show="error" class="border border-fg p-3 text-sm" x-text="error"></div>
             </section>
 
             <div class="flex justify-between pt-8 border-t border-divider">

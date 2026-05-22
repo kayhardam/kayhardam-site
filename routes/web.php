@@ -18,9 +18,9 @@ Route::get('/notes/{slug}', function (string $slug) {
 
 Route::view('/tools/team-shuffler', 'tools.team-shuffler')->name('tools.team-shuffler');
 Route::get('/tools/leerdoelen', [LeerdoelenController::class, 'show'])->name('tools.leerdoelen');
-Route::post('/tools/leerdoelen', [LeerdoelenController::class, 'generate'])
+Route::post('/tools/leerdoelen', [LeerdoelenController::class, 'synthesize'])
     ->middleware('throttle:leerdoelen')
-    ->name('tools.leerdoelen.generate');
+    ->name('tools.leerdoelen.synthesize');
 
 Route::get('/sitemap.xml', function () {
     return response()

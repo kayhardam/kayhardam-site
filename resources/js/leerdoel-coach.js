@@ -1,7 +1,8 @@
-export function leerdoelCoach({ activiteiten, nietWaarneembaar }) {
+export function leerdoelCoach({ activiteiten, nietWaarneembaar, csrf }) {
     return {
         activiteiten,
         nietWaarneembaar,
+        csrf,
         step: 1,
         stepLabels: [
             "context",
@@ -21,6 +22,9 @@ export function leerdoelCoach({ activiteiten, nietWaarneembaar }) {
         inhoud: "",
         voorwaarden: "",
         criteria: "",
+        leerdoel: "",
+        loading: false,
+        error: "",
         next() {
             if (this.step < 6) this.step++;
         },
@@ -36,24 +40,50 @@ export function leerdoelCoach({ activiteiten, nietWaarneembaar }) {
                 domein: "motorisch",
             };
             this.gedrag = this.inhoud = this.voorwaarden = this.criteria = "";
+            this.leerdoel = "";
+            this.loading = false;
+            this.error = "";
         },
         suggesties() {
             const act = this.activiteiten[this.context.activiteit];
             return act ? act.werkwoorden : [];
         },
-        dummyZin() {
-            const prefix =
-                this.context.type === "reeksdoel"
-                    ? "Aan het einde van de lessenreeks"
-                    : "Aan het einde van deze les";
-            const groep = this.context.groep
-                ? `kunnen de leerlingen van ${this.context.groep}`
-                : "kunnen de leerlingen";
-            const ged = this.gedrag || "...";
-            const inh = this.inhoud || "...";
-            const voor = this.voorwaarden || "...";
-            const crit = this.criteria || "...";
-            return `${prefix} ${groep} ${voor} ${ged}, ${inh}, ${crit}.`;
+        async synthesize() {
+            this.loading = true;
+            this.error = "";
+            this.leerdoel = "";
+
+            try {
+                const response = await fetch("/tools/leerdoelen", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        "X-CSRF-TOKEN": this.csrf,
+                    },
+                    body: JSON.stringify({
+                        context: this.context,
+                        gedrag: this.gedrag,
+                        inhoud: this.inhoud,
+                        voorwaarden: this.voorwaarden,
+                        criteria: this.criteria,
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    this.error =
+                        data.error || "Er ging iets mis bij het synthetiseren.";
+                    return;
+                }
+
+                this.leerdoel = data.leerdoel;
+            } catch (e) {
+                this.error = "Geen verbinding. Probeer opnieuw.";
+            } finally {
+                this.loading = false;
+            }
         },
     };
 }
