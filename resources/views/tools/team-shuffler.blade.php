@@ -5,6 +5,8 @@
 
     <x-nav />
 
+    <main class="tool-shuffle">
+
     {{-- Back to tools --}}
     <a href="/#tools" class="font-mono text-[11px] tracking-wide font-semibold text-muted hover:text-fg mb-6 inline-block">← tools</a>
 
@@ -211,5 +213,7 @@
             }
         })();
     </script>
+
+    </main>
 
 </x-layout>

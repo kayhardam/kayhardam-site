@@ -24,6 +24,15 @@
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
+.tool-shuffle {
+    --color-accent: #3a7fbf;
+    --color-accent-hover: #2a5f99;
+}
+.tool-leerdoel {
+    --color-accent: #d44a2e;
+    --color-accent-hover: #a83a1f;
+}
+
 /* Page defaults */
 @layer base {
     body {
