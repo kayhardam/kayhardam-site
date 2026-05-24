@@ -55,12 +55,49 @@
 }
 
 .note-body h2 {
-    font-size: 1.125rem;
-    font-weight: 800;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-fg);
+    letter-spacing: -0.02em;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    scroll-margin-top: 2rem;
+}
+
+.note-body h3 {
+    font-size: 1.1875rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    letter-spacing: -0.01em;
+    margin-top: 1.75em;
+    margin-bottom: 0.4em;
+    scroll-margin-top: 2rem;
+}
+
+.note-body h4 {
+    font-size: 1rem;
+    font-weight: 500;
     color: var(--color-fg);
     margin-top: 1.5em;
-    margin-bottom: 0.5em;
-    letter-spacing: -0.015em;
+    margin-bottom: 0.35em;
+    scroll-margin-top: 2rem;
+}
+
+.note-body h2 .anchor,
+.note-body h3 .anchor,
+.note-body h4 .anchor {
+    color: #b8b3a4;
+    font-weight: 400;
+    font-size: 0.65em;
+    margin-left: 0.625rem;
+    text-decoration: none;
+    transition: color 140ms ease;
+}
+
+.note-body h2:hover .anchor,
+.note-body h3:hover .anchor,
+.note-body h4:hover .anchor {
+    color: var(--color-fg);
 }
 
 .note-body a {

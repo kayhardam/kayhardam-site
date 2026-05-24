@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\MarkdownConverter;
 use Symfony\Component\Finder\SplFileInfo;
 use Tempest\Highlight\CommonMark\HighlightExtension;
@@ -65,8 +66,20 @@ class FieldNotes
     private static function converter(): MarkdownConverter
     {
         if (self::$converter === null) {
-            $environment = new Environment();
+            $environment = new Environment([
+                'heading_permalink' => [
+                    'min_heading_level' => 2,
+                    'max_heading_level' => 4,
+                    'insert' => 'after',
+                    'symbol' => '#',
+                    'html_class' => 'anchor',
+                    'id_prefix' => '',
+                    'fragment_prefix' => '',
+                    'title' => 'Link naar deze sectie',
+                ],
+            ]);
             $environment->addExtension(new CommonMarkCoreExtension());
+            $environment->addExtension(new HeadingPermalinkExtension());
             $environment->addExtension(new GithubFlavoredMarkdownExtension());
             $environment->addExtension(new HighlightExtension(
                 new Highlighter(new CssTheme()),
