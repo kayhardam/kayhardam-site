@@ -58,9 +58,18 @@ class FieldNotes
             'slug' => substr($filename, 11),
             'title' => ltrim($title, '# '),
             'description' => Str::limit($firstParagraph, 160),
-            'excerpt' => $converter->convert($firstParagraph)->getContent(),
-            'body' => $converter->convert($bodyTrimmed)->getContent(),
+            'excerpt' => self::hoistImageCaptions($converter->convert($firstParagraph)->getContent()),
+            'body' => self::hoistImageCaptions($converter->convert($bodyTrimmed)->getContent()),
         ];
+    }
+
+    private static function hoistImageCaptions(string $html): string
+    {
+        return preg_replace_callback(
+            '/<p><img([^>]*?)\s+title="([^"]*)"([^>]*?)><\/p>/',
+            fn($m) => '<figure><img' . rtrim($m[1] . $m[3]) . '><figcaption>' . $m[2] . '</figcaption></figure>',
+            $html,
+        );
     }
 
     private static function converter(): MarkdownConverter

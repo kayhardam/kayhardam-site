@@ -80,6 +80,12 @@ Houdt flexibiliteit. Tokeniseren als patronen vaak genoeg terugkomen om te verdi
 
 Vuistregel: `npm run dev` draait altijd in een tweede terminal-tab tijdens werk. Bij onverklaarbare missing styles is dit het eerste om te checken.
 
+## Images in notes
+
+- Pad: `public/images/notes/<slug>/<bestand>.png` — markdown verwijst met `/images/notes/<slug>/<bestand>.png`. Per-note subdirectory houdt het opgeruimd als notes groeien.
+- Caption: `![alt](src "caption tekst")` — `FieldNotes::hoistImageCaptions()` post-processed `<p><img title="..."></p>` naar `<figure><img><figcaption>` voor semantic HTML.
+- Fallback: image zonder title-attribuut blijft `<p><img></p>`, geen figure-wrapper.
+
 ## Git-commits
 
 Conventional commits: `feat`/`fix`/`refactor`/`chore`/`docs` met optionele scope. Imperatief, kort, zelf-omschrijvend.
