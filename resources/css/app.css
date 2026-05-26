@@ -182,3 +182,43 @@
     color: var(--color-muted);
     margin-top: 8px;
 }
+
+/* Muybridge — frame-by-frame walk cycle. Hover-trigger, respecteert prefers-reduced-motion. */
+.muybridge {
+    width: 64px;
+    height: 80px;
+    overflow: hidden;
+    border-bottom: 2px solid var(--muybridge-color, #0f0f0f);
+}
+
+.muybridge__strip {
+    display: flex;
+    width: 256px;
+    height: 80px;
+}
+
+.muybridge__frame {
+    width: 64px;
+    height: 80px;
+    flex-shrink: 0;
+    display: block;
+}
+
+@keyframes muybridge-walk {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.muybridge:hover .muybridge__strip {
+    animation: muybridge-walk 600ms steps(4) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .muybridge:hover .muybridge__strip {
+        animation: none;
+    }
+}
