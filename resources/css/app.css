@@ -213,12 +213,14 @@
     }
 }
 
-.muybridge:hover .muybridge__strip {
+.muybridge:hover .muybridge__strip,
+.tool-card:hover .muybridge__strip {
     animation: muybridge-walk 600ms steps(4) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .muybridge:hover .muybridge__strip {
+    .muybridge:hover .muybridge__strip,
+    .tool-card:hover .muybridge__strip {
         animation: none;
     }
 }
