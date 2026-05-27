@@ -6,20 +6,10 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use League\CommonMark\Environment\Environment;
-use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
-use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
-use League\CommonMark\MarkdownConverter;
 use Symfony\Component\Finder\SplFileInfo;
-use Tempest\Highlight\CommonMark\HighlightExtension;
-use Tempest\Highlight\Highlighter;
-use Tempest\Highlight\Themes\CssTheme;
 
 class FieldNotes
 {
-    private static ?MarkdownConverter $converter = null;
-
     public static function all(): Collection
     {
         $directory = resource_path('markdown/field-notes');
@@ -43,12 +33,9 @@ class FieldNotes
     {
         $content = file_get_contents($file->getPathname());
         [$title, $body] = array_pad(explode("\n\n", $content, 2), 2, '');
-
         $filename = $file->getFilenameWithoutExtension();
         $bodyTrimmed = trim($body);
         $firstParagraph = explode("\n\n", $bodyTrimmed, 2)[0];
-
-        $converter = self::converter();
 
         return [
             'date' => substr($filename, 0, 10),
@@ -58,44 +45,8 @@ class FieldNotes
             'slug' => substr($filename, 11),
             'title' => ltrim($title, '# '),
             'description' => Str::limit($firstParagraph, 160),
-            'excerpt' => self::hoistImageCaptions($converter->convert($firstParagraph)->getContent()),
-            'body' => self::hoistImageCaptions($converter->convert($bodyTrimmed)->getContent()),
+            'excerpt' => MarkdownParser::toHtml($firstParagraph),
+            'body' => MarkdownParser::toHtml($bodyTrimmed),
         ];
-    }
-
-    private static function hoistImageCaptions(string $html): string
-    {
-        return preg_replace_callback(
-            '/<p><img([^>]*?)\s+title="([^"]*)"([^>]*?)><\/p>/',
-            fn($m) => '<figure><img' . rtrim($m[1] . $m[3]) . '><figcaption>' . $m[2] . '</figcaption></figure>',
-            $html,
-        );
-    }
-
-    private static function converter(): MarkdownConverter
-    {
-        if (self::$converter === null) {
-            $environment = new Environment([
-                'heading_permalink' => [
-                    'min_heading_level' => 2,
-                    'max_heading_level' => 4,
-                    'insert' => 'after',
-                    'symbol' => '#',
-                    'html_class' => 'anchor',
-                    'id_prefix' => '',
-                    'fragment_prefix' => '',
-                    'title' => 'Link naar deze sectie',
-                ],
-            ]);
-            $environment->addExtension(new CommonMarkCoreExtension());
-            $environment->addExtension(new HeadingPermalinkExtension());
-            $environment->addExtension(new GithubFlavoredMarkdownExtension());
-            $environment->addExtension(new HighlightExtension(
-                new Highlighter(new CssTheme()),
-            ));
-            self::$converter = new MarkdownConverter($environment);
-        }
-
-        return self::$converter;
     }
 }
