@@ -3,7 +3,7 @@
 use App\Http\Controllers\LeerdoelenController;
 use App\Support\FieldNotes;
 use Illuminate\Support\Facades\Route;
-use App\Support\CaseStudy;
+use App\Support\Werk;
 
 Route::get('/', function () {
     return view('home', ['notes' => FieldNotes::all()]);
@@ -18,9 +18,9 @@ Route::get('/notes/{slug}', function (string $slug) {
 });
 
 Route::get('/werk/{slug}', function (string $slug) {
-    $case = CaseStudy::find($slug);
+    $case = Werk::find($slug);
     abort_if(!$case, 404);
-    return view('werk', ['case' => $case]);
+    return view('werk', ['werk' => $case]);
 });
 
 Route::view('/tools/team-shuffler', 'tools.team-shuffler')->name('tools.team-shuffler');

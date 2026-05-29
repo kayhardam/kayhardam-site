@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
-class CaseStudy
+class Werk
 {
     public static function all(): Collection
     {
