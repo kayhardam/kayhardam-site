@@ -1,13 +1,13 @@
 <x-layout
     title="kay hardam — vakleerkracht sport, open-source tools voor lesgeven"
-    description="Vakleerkracht sport. Ik bouw open-source tools voor lesgeven en schrijf over wat ik onderweg leer.">
+    description="Vakleerkracht sport die open-source tools bouwt voor het onderwijs. Cases over de keuzes achter de code.">
 
     <x-nav />
 
     {{-- Hero --}}
     <h1 class="text-[64px] md:text-[88px] font-extrabold tracking-[-0.045em] leading-[0.9] mb-4">kay hardam</h1>
     <p class="text-[17px] leading-[1.5] max-w-[520px] mb-10 font-medium">
-        Vakleerkracht sport. Ik bouw open-source tools voor lesgeven en schrijf over wat ik onderweg leer.
+        Vakleerkracht sport. Ik bouw open-source tools voor het onderwijs en schrijf de keuzes erachter op.
     </p>
 
     {{-- Case-spotlight --}}

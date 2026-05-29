@@ -1,6 +1,6 @@
 @props([
 'title' => 'kay hardam',
-'description' => 'Vakleerkracht sport. Ik bouw open-source tools voor lesgeven en schrijf over wat ik onderweg leer.',
+'description' => 'Vakleerkracht sport die open-source tools bouwt voor het onderwijs. Cases over de keuzes achter de code.',
 'path' => '/',
 'type' => 'website',
 ])
