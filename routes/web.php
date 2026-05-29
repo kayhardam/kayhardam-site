@@ -25,6 +25,6 @@ Route::post('/tools/leerdoelen', [LeerdoelenController::class, 'synthesize'])
 
 Route::get('/sitemap.xml', function () {
     return response()
-        ->view('sitemap')
+        ->view('sitemap', ['werk' => Werk::all()])
         ->header('Content-Type', 'application/xml');
 });
