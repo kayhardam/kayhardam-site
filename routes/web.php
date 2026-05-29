@@ -6,7 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Support\Werk;
 
 Route::get('/', function () {
-    return view('home', ['notes' => FieldNotes::all()]);
+    return view('home', [
+        'notes' => FieldNotes::all(),
+        'werk' => Werk::all(),
+        'featured' => Werk::find('leerdoel-coach'),
+    ]);
 });
 
 Route::get('/notes/{slug}', function (string $slug) {

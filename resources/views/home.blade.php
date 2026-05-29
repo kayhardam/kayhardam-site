@@ -68,29 +68,31 @@
         </article>
     </section>
 
-    {{-- 03 / field notes --}}
-    <section id="notes" class="mt-[60px] pt-[34px] border-t-2 border-fg">
-        <span class="inline-block bg-accent font-mono text-[11px] font-bold tracking-wide px-2.5 py-1 mb-3.5">03 / field notes</span>
-        <h2 class="text-[38px] font-extrabold tracking-[-0.03em] leading-none mb-2">field notes</h2>
-        <p class="text-sm leading-[1.55] text-muted font-medium max-w-[520px] mb-7">Korte stukken vanuit lesgeven en bouwen. Geplaatst als er iets te zeggen is.</p>
-        @forelse ($notes as $note)
+    {{-- 03 / werk --}}
+    <section id="werk" class="mt-[60px] pt-[34px] border-t-2 border-fg">
+        <span class="inline-block bg-accent font-mono text-[11px] font-bold tracking-wide px-2.5 py-1 mb-3.5">03 / werk</span>
+        <h2 class="text-[38px] font-extrabold tracking-[-0.03em] leading-none mb-2">wat ik bouwde, en wat ik leerde</h2>
+        <p class="text-sm leading-[1.55] text-muted font-medium max-w-[520px] mb-7">Cases over de beslissingen achter de tools — het werk vóór de code.</p>
+        @forelse ($werk as $case)
         <article class="grid grid-cols-[64px_1fr] gap-5 py-5 items-start {{ !$loop->first ? 'border-t border-divider' : '' }}">
-            <div class="font-mono text-xs text-muted font-bold pt-1">{{ substr($note['date'], 0, 4) }}</div>
+            <div class="font-mono text-[22px] font-extrabold tracking-[-0.02em] pt-1">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</div>
             <div>
+                <div class="font-mono text-[11px] font-semibold tracking-wide text-muted mb-1.5">case · {{ $case['reading_time'] }} min lezen</div>
                 <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
-                    <a href="/notes/{{ $note['slug'] }}" class="hover:underline decoration-2 underline-offset-[3px]">{{ $note['title'] }}</a>
+                    <a href="/werk/{{ $case['slug'] }}" class="hover:underline decoration-2 underline-offset-[3px]">{{ $case['title'] }}</a>
                 </h3>
                 <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
-                    {!! $note['excerpt'] !!}
+                    {{ $case['lede'] }}
                 </div>
             </div>
         </article>
         @empty
         <p class="text-[15px] leading-[1.65] font-medium max-w-[560px]">
-            Nog niks gepubliceerd. De eerste komt eraan.
+            Eerste case komt eraan.
         </p>
         @endforelse
     </section>
+    {{-- 03 / field notes --}}
 
     <x-footer />
 
