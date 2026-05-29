@@ -3,7 +3,7 @@
 Sinds de layout-dedupe leeft de gedeelde HTML-shell in components:
 
 - `<x-layout title="..." description="..." path="/..." type="website">` — head met meta tags, body, max-w-3xl container. Slot voor pagina-content.
-- `<x-nav />` — top-nav met links naar `/`, `/#about`, `/#tools`, `/#notes`. Opt-in (note-detail laat 'm weg).
+- `<x-nav />` — top-nav met links naar `/`, `/#about`, `/#tools`. Opt-in.
 - `<x-footer />` — footer met github + mail. Opt-in.
 
 Bestanden in `resources/views/components/`. Props in component-files via `@props([...])`.
@@ -56,7 +56,6 @@ Geen vaste type-scale-tokens. Tailwind defaults + arbitrary values per gebruik. 
 
 - Hero h1: `text-[64px] md:text-[88px]` (homepage), `text-[48px] md:text-[64px]` (tool-detail)
 - Section h2: `text-[38px]`
-- Note detail h1: `text-[38px] md:text-[48px]`
 - Body: `text-[15px]`
 - Lead/hero-subtitle: `text-[17px]`
 - Helper-text onder labels: `text-[14px]`
@@ -80,12 +79,6 @@ Houdt flexibiliteit. Tokeniseren als patronen vaak genoeg terugkomen om te verdi
 
 Vuistregel: `npm run dev` draait altijd in een tweede terminal-tab tijdens werk. Bij onverklaarbare missing styles is dit het eerste om te checken.
 
-## Images in notes
-
-- Pad: `public/images/notes/<slug>/<bestand>.png` — markdown verwijst met `/images/notes/<slug>/<bestand>.png`. Per-note subdirectory houdt het opgeruimd als notes groeien.
-- Caption: `![alt](src "caption tekst")` — `FieldNotes::hoistImageCaptions()` post-processed `<p><img title="..."></p>` naar `<figure><img><figcaption>` voor semantic HTML.
-- Fallback: image zonder title-attribuut blijft `<p><img></p>`, geen figure-wrapper.
-
 ## Git-commits
 
 Conventional commits: `feat`/`fix`/`refactor`/`chore`/`docs` met optionele scope. Imperatief, kort, zelf-omschrijvend.
@@ -102,7 +95,7 @@ Geen emojis. Geen issue-refs in subject. Body-paragraaf alleen als er echt iets 
 
 **NEVER include "Co-authored-by Claude" of soortgelijke AI-attributie** in commits, PRs, code-comments, README, file headers, of waar dan ook. Code is van mij. Sessies met Claude zijn tooling, geen co-authorship.
 
-In publieke narrative — field notes, about-copy, blog — mág AI als bouwmaatje/sparringpartner wél openlijk genoemd worden. Dat is een ander register.
+In publieke narrative — about-copy, blog — mág AI als bouwmaatje/sparringpartner wél openlijk genoemd worden. Dat is een ander register.
 
 ## Sessies met Claude Code
 

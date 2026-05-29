@@ -3,6 +3,5 @@
     <div class="space-x-4 text-muted font-medium">
         <a href="/#about">over</a>
         <a href="/#tools">tools</a>
-        <a href="/#notes">notes</a>
     </div>
 </nav>

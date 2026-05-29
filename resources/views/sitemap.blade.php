@@ -11,11 +11,4 @@
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-    @foreach ($notes as $note)
-    <url>
-        <loc>https://kayhardam.dev/notes/{{ $note['slug'] }}</loc>
-        <lastmod>{{ $note['date'] }}</lastmod>
-        <priority>0.7</priority>
-    </url>
-    @endforeach
 </urlset>

@@ -28,7 +28,6 @@
     </div>
     @endif
 
-
     {{-- 01 / over --}}
     <section id="about" class="mt-[60px] pt-[34px] border-t-2 border-fg">
         <span class="inline-block bg-accent font-mono text-[11px] font-bold tracking-wide px-2.5 py-1 mb-3.5">01 / over</span>
@@ -95,7 +94,6 @@
         </p>
         @endforelse
     </section>
-    {{-- 03 / field notes --}}
 
     <x-footer />
 
