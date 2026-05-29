@@ -6,8 +6,6 @@ code_url: https://github.com/kayhardam/kayhardam-site
 
 # leerdoel-coach
 
-een webtool die docenten dwingt hun leerdoel concreet te maken, in plaats van het voor ze te verzinnen.
-
 ## het probleem
 
 een leerdoel opschrijven is makkelijk. een leerdoel opschrijven dat je dinsdag in de gymzaal kunt zien gebeuren is dat niet. "de leerling kan na de les goed samenwerken met andere leerlingen" — dat klinkt af, maar het wijst nergens naar. wat is "goed"? met wie? en hoe observeer je iets dat pas ná de les zou gebeuren? je kunt het niet aftekenen en niet bespreken met een leerling.
