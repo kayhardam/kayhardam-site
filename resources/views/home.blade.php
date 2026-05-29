@@ -10,21 +10,24 @@
         Vakleerkracht sport. Ik bouw open-source tools voor lesgeven en schrijf over wat ik onderweg leer.
     </p>
 
-    {{-- Live demo lab --}}
+    {{-- Case-spotlight --}}
+    @if ($featured)
     <div class="bg-fg text-bg p-7 max-w-[520px]">
-        <div class="font-mono text-[11px] text-accent tracking-wide font-semibold mb-4">// live demo · prompt-generator</div>
-        <div id="prompt-output" class="text-[24px] font-bold leading-[1.25] tracking-[-0.015em] mb-6">
-            Klik de knop voor een random bewegingsprompt voor je les.
+        <div class="font-mono text-[11px] text-accent tracking-wide font-semibold mb-4">// uitgelicht · case study</div>
+        <h3 class="text-[30px] font-extrabold tracking-[-0.025em] leading-[1.05] mb-3">{{ $featured['title'] }}</h3>
+        <p class="text-[15px] leading-[1.55] mb-5">{{ $featured['lede'] }}</p>
+        <div class="flex flex-wrap gap-2.5 mb-4">
+            <a href="/werk/{{ $featured['slug'] }}" class="bg-accent text-fg px-[18px] py-[11px] font-mono text-[11px] font-bold tracking-wide hover:bg-accent-hover transition-colors">lees de case →</a>
+            @if ($featured['tool_url'])
+            <a href="{{ $featured['tool_url'] }}" class="border border-bg text-bg px-[17px] py-[10px] font-mono text-[11px] font-bold tracking-wide hover:bg-bg hover:text-fg transition-colors">probeer de tool ↗</a>
+            @endif
         </div>
-        <button id="prompt-button"
-            type="button"
-            class="bg-accent text-fg px-[22px] py-3 text-sm font-bold tracking-tight cursor-pointer transition-colors hover:bg-accent-hover">
-            geef me een prompt →
-        </button>
-        <div class="font-mono text-[11px] text-muted-light tracking-wide mt-[18px]">
-            een klein voorbeeld van wat ik bouw. de echte tools staan hieronder.
+        <div class="font-mono text-[11px] text-muted-light tracking-wide">
+            case · {{ $featured['reading_time'] }} min lezen · live
         </div>
     </div>
+    @endif
+
 
     {{-- 01 / over --}}
     <section id="about" class="mt-[60px] pt-[34px] border-t-2 border-fg">
