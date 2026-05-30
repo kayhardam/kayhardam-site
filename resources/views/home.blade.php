@@ -12,7 +12,7 @@
 
     {{-- Case-spotlight --}}
     @if ($featured)
-    <div class="bg-fg text-bg p-7 max-w-[520px]">
+    <div class="bg-fg text-bg p-7 max-w-[520px] shadow-[7px_7px_0_var(--color-accent)]">
         <div class="font-mono text-[11px] text-accent tracking-wide font-semibold mb-4">// uitgelicht · case study</div>
         <h3 class="text-[30px] font-extrabold tracking-[-0.025em] leading-[1.05] mb-3">{{ $featured['title'] }}</h3>
         <p class="text-[15px] leading-[1.55] mb-5">{{ $featured['lede'] }}</p>
