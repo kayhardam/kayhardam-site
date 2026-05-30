@@ -46,7 +46,7 @@
         <span class="inline-block bg-accent font-mono text-[11px] font-bold tracking-wide px-2.5 py-1 mb-3.5">02 / tools</span>
         <h2 class="text-[38px] font-extrabold tracking-[-0.03em] leading-none mb-2">wat ik bouw</h2>
         <p class="text-sm leading-[1.55] text-muted font-medium max-w-[520px] mb-7">Kleine open-source apps. Gebouwd in het openbaar.</p>
-        <article class="tool-card grid grid-cols-[64px_1fr] gap-5 py-5 items-start">
+        <article class="tool-card grid grid-cols-[64px_1fr] gap-5 p-5 items-start border-2 border-fg shadow-[7px_7px_0_#3a7fbf]">
             <x-muybridge color="#3a7fbf" />
             <div>
                 <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </article>
-        <article class="tool-card grid grid-cols-[64px_1fr] gap-5 py-5 items-start border-t border-divider">
+        <article class="tool-card grid grid-cols-[64px_1fr] gap-5 p-5 items-start border-2 border-fg shadow-[7px_7px_0_#d44a2e] mt-6">
             <x-muybridge color="#d44a2e" />
             <div>
                 <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
