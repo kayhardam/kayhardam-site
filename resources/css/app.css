@@ -11,14 +11,19 @@
 
 /* Design tokens — zie CLAUDE.md */
 @theme {
-    --color-bg: #fcfaf4;
-    --color-fg: #0f0f0f;
-    --color-fg-soft: #3d3d3d;
-    --color-muted: #6b6b6b;
-    --color-muted-light: #9a9a9a;
-    --color-accent: #ffe54b;
-    --color-accent-hover: #f5c518;
-    --color-divider: #e5e0d5;
+    /* Tahoe — diep-donker. volledige richting + rationale: docs/design-richting.md */
+    --color-bg: #12173a; /* paper — diep indigo, achtergrond */
+    --color-card: #1b2150; /* card — paneel / kaart (nieuw) */
+    --color-fg: #eef0ff; /* ink — tekst */
+    --color-muted: #9aa0cc; /* secundaire tekst, mono labels */
+    --color-divider: #2b3270; /* line — rand / divider */
+    --color-accent: #6f8cff; /* blauw — primair: nav, knoppen, links */
+    --color-accent-2: #9b86ff; /* violet — alleen beweging (nieuw) */
+
+    /* provisioneel, verfijnen bij de componenten die ze gebruiken */
+    --color-fg-soft: #c6cbe8;
+    --color-muted-light: #aab0d6;
+    --color-accent-hover: #8aa0ff;
 
     --font-sans: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;

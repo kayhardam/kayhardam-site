@@ -8,36 +8,55 @@ Sinds de layout-dedupe leeft de gedeelde HTML-shell in components:
 
 Bestanden in `resources/views/components/`. Props in component-files via `@props([...])`.
 
-## Design tokens
+## Design
 
-Indie/brutalist met highlighter yellow als bijna-enige accent. Tokens leven in `resources/css/app.css` als `@theme`-block:
+Diep-donker Tahoe. De volledige richting + rationale (waarom blauw/violet, glas-discipline, de Muybridge-handtekening) staat in `docs/design-richting.md` — die is leidend. Hieronder alleen wat de implementatie moet weten.
 
-```css
-@theme {
-    --color-bg: #fcfaf4; /* warm cream wit */
-    --color-fg: #0f0f0f; /* near-black */
-    --color-fg-soft: #3d3d3d; /* secundaire body-tekst */
-    --color-muted: #6b6b6b; /* mono labels, h2-subtitles */
-    --color-muted-light: #9a9a9a; /* tekst op donkere bg (lab-block) */
-    --color-accent: #ffe54b; /* highlighter yellow, golden niet chartreuse */
-    --color-accent-hover: #f5c518; /* CTA-button hover */
-    --color-divider: #e5e0d5; /* subtiele rule-lijnen */
+### Tokens
 
-    --font-sans: "Inter", system-ui, sans-serif;
-    --font-mono: "JetBrains Mono", ui-monospace, monospace;
-}
-```
+`design-richting.md` noemt de tokens conceptueel (`paper`, `ink`, `acc`); in `resources/css/app.css` leven ze als `@theme`-`--color-*`-namen, zodat Tailwind v4 de utilities genereert (`bg-bg`, `text-fg`, `bg-accent`). Mapping:
 
-### Yellow-discipline
+- `paper` → `--color-bg` — achtergrond (#12173a)
+- `card` → `--color-card` — paneel / kaart (#1b2150)
+- `ink` → `--color-fg` — tekst (#eef0ff)
+- `muted` → `--color-muted` — secundaire tekst, mono labels
+- `line` → `--color-divider` — rand / divider
+- `acc` → `--color-accent` — blauw, primair (nav, knoppen, links)
+- `acc2` → `--color-accent-2` — violet, alleen beweging
 
-Yellow alleen voor accent, niet decoratie. Op enig moment max ~5 zichtbare accent-plekken:
+Waarden staan in `app.css`; niet hier dupliceren. `--color-fg-soft`, `--color-muted-light` en `--color-accent-hover` zijn voorlopige donkere waarden — scherpstellen per component.
 
-- **Homepage**: drie section-labels (rechthoekige pills met mono), één lab-tag binnen het donkere demo-block, één lab-CTA-button.
-- **Tool-detail pages**: tool-pill bovenaan, primary CTA-button.
+### Accent-discipline
 
-Wat **niet** yellow is: tag-pills in lijsten, link-underlines, github-buttons, footer-links, nav-pills, helper-text. Als het terugkruipt op die plekken, kruipt yellow van accent naar decoratie. Dat is de val.
+Blauw draagt: nav, knoppen, links, ▸. Violet licht alléén op bij beweging — geen statisch violet. Accent blijft spaarzaam, ~5% van het beeld. Kruipt het naar tag-pills, link-underlines, footer-links of helper-text, dan is het van accent naar decoratie gegleden. Dat is de val.
 
-Vuistregel: als yellow op meer dan ~5% van de viewport voorkomt op enig moment, is het te veel.
+### Glas
+
+Spaarzaam, en alléén op de echte site: nav + kaarten, doorschijnend boven een blauw→violet-verloop. Intensiteit: zie `design-richting.md`.
+
+### Casing
+
+- Display headings: **lowercase** ("kay hardam", "wat ik bouw")
+- Body, paragrafen: **sentence case** ("Vakleerkracht sport in het...")
+- Mono labels: **lowercase** met letter-spacing (~0.04em) ("01 / over", "// live demo · prompt-generator")
+- Inline links in body: zoals omringende tekst
+
+### Hoeken
+
+Zachte radius — ~8px op kaarten, ~7px op knoppen en pills. Vervangt de oude no-border-radius-regel. Per component met arbitrary values (`rounded-[8px]`); tokeniseren als het patroon vaak genoeg terugkomt.
+
+### Type-aanpak
+
+Geen vaste type-scale-tokens. Tailwind defaults + arbitrary values per gebruik. Bijvoorbeeld:
+
+- Hero h1: `text-[64px] md:text-[88px]` (homepage), `text-[48px] md:text-[64px]` (tool-detail)
+- Section h2: `text-[38px]`
+- Body: `text-[15px]`
+- Lead/hero-subtitle: `text-[17px]`
+- Helper-text onder labels: `text-[14px]`
+- Mono labels: `text-[11px]`
+
+Houdt flexibiliteit; maten kunnen tijdens de redesign schuiven. Tokeniseren als patronen het verdienen.
 
 ### Casing
 
