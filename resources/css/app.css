@@ -41,7 +41,19 @@
 /* Page defaults */
 @layer base {
     body {
-        background-color: var(--color-bg);
+        background:
+            radial-gradient(
+                135% 100% at 78% -15%,
+                color-mix(in srgb, var(--color-accent-2) 48%, transparent) 0%,
+                transparent 55%
+            ),
+            radial-gradient(
+                115% 90% at 8% -5%,
+                color-mix(in srgb, var(--color-accent) 40%, transparent) 0%,
+                transparent 50%
+            ),
+            var(--color-bg);
+        min-height: 100vh;
         color: var(--color-fg);
         font-family: var(--font-sans);
         font-weight: 500;
@@ -50,6 +62,7 @@
         -moz-osx-font-smoothing: grayscale;
     }
 }
+
 /* Field note body content */
 .note-body p {
     margin-bottom: 0.75em;
