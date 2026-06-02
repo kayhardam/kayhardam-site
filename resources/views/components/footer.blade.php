@@ -1,11 +1,10 @@
-<footer class="mt-[60px] pt-[22px] border-t-2 border-fg font-mono text-[11px] text-muted font-bold">
-    <p class="mb-3">Geen tracking. Geen analytics. Geen advertenties.</p>
-    <div class="flex justify-between items-center">
+<footer class="mt-24 rounded-2xl border border-divider bg-card/60 backdrop-blur-md px-6 py-6 font-mono text-[11px] tracking-wide text-muted font-medium">
+    <div class="flex flex-wrap items-baseline justify-between gap-y-3">
+        <div class="flex gap-5">
+            <a href="https://github.com/kayhardam" class="text-fg hover:text-accent transition-colors">github</a>
+            <a href="mailto:hardamkay@gmail.com" class="text-fg hover:text-accent transition-colors">mail</a>
+        </div>
         <span>kayhardam.dev · 2026</span>
-        <span>
-            <a href="https://github.com/kayhardam" class="text-fg underline decoration-1 underline-offset-2">github</a>
-            ·
-            <a href="mailto:hardamkay@gmail.com" class="text-fg underline decoration-1 underline-offset-2">mail</a>
-        </span>
     </div>
+    <p class="mt-5">geen tracking, geen analytics, geen advertenties.</p>
 </footer>
