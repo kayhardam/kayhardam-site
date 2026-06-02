@@ -67,9 +67,10 @@ Houdt flexibiliteit. Tokeniseren als patronen vaak genoeg terugkomen om te verdi
 
 - Tailwind utility-first inline. Custom utilities via `@utility` alleen bij ≥5× repetitie.
 - CSS custom properties via `@theme` voor tokens. Worden auto-generated als utilities (`bg-accent`, `text-muted`, etc.).
-- Vanilla JS, geen framework.
-    - **Page-specifieke JS** inline in de Blade view, in `<script>` binnen de `<x-layout>` slot. Voorbeeld: team-shuffler shuffle-logica.
-    - **Cross-page JS** in `resources/js/`, geïmporteerd via `app.js`. Voorbeeld: prompt-generator op de homepage.
+- **JS — juiste gereedschap per interactie.**
+    - **Vanilla inline JS** (default) voor stateless één-shot interacties: input → bereken → render. In de Blade view, in `<script>` binnen de `<x-layout>` slot. Voorbeeld: team-shuffler, bewegingsprompt-generator (homepage).
+    - **Alpine.js** alleen bij echte reactieve UI-state: multi-step, live two-way binding, conditionele secties. Component in `resources/js/`, geregistreerd via `Alpine.data()` in `app.js`, gekoppeld met `x-data`. Enige gebruiker nu: leerdoel-coach (6-staps GIVC-wizard).
+    - Alpine laadt globaal, dus het zit al in elke bundle. "Vanilla als default" is een keuze voor code-eenvoud, niet voor bytes.
 - Locale: NL primair in markup en copy. EN volgt als de site er om vraagt.
 - Honest empty states: als een sectie nog leeg is, zég dat. Geen placeholder-cards die fake gewicht geven.
 
