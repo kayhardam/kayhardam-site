@@ -4,96 +4,34 @@
 
     <x-nav />
 
-    {{-- Hero --}}
-    <h1 class="text-[64px] md:text-[88px] font-extrabold tracking-[-0.045em] leading-[0.9] mb-4">kay hardam</h1>
-    <p class="text-[17px] leading-[1.5] max-w-[520px] mb-10 font-medium">
-        Vakleerkracht sport. Ik bouw open-source tools voor het onderwijs en schrijf de keuzes erachter op.
-    </p>
+    {{-- hero --}}
+    <section class="pb-20">
+        <div class="font-mono text-[11px] text-accent tracking-[0.18em] mb-8">/ 00 · kay hardam</div>
+        <h1 class="text-[68px] md:text-[120px] font-extrabold tracking-[-0.05em] leading-[0.82] mb-8">kay<br>hardam<span class="text-accent">.</span></h1>
+        <p class="text-[18px] md:text-[20px] leading-[1.5] font-medium max-w-[560px] mb-7">
+            Vakleerkracht sport. Ik bouw open-source tools voor het onderwijs en schrijf de keuzes erachter op.
+        </p>
+        <div class="font-mono text-[11px] text-muted tracking-wide">geen tracking, geen onzin</div>
+    </section>
 
-    {{-- Case-spotlight --}}
+    {{-- uitgelichte case --}}
     @if ($featured)
-    <div class="bg-fg text-bg p-7 max-w-[520px] shadow-[7px_7px_0_var(--color-accent)]">
-        <div class="font-mono text-[11px] text-accent tracking-wide font-semibold mb-4">// uitgelicht · case study</div>
+    <div class="tool-card bg-card text-fg rounded-2xl border border-divider p-7 max-w-[560px]">
+        <x-muybridge color="var(--color-accent)" />
+        <div class="font-mono text-[11px] text-accent tracking-wide font-semibold mt-4 mb-4">// uitgelicht · case study</div>
         <h3 class="text-[30px] font-extrabold tracking-[-0.025em] leading-[1.05] mb-3">{{ $featured['title'] }}</h3>
-        <p class="text-[15px] leading-[1.55] mb-5">{{ $featured['lede'] }}</p>
+        <p class="text-[15px] leading-[1.55] text-muted mb-5">{{ $featured['lede'] }}</p>
         <div class="flex flex-wrap gap-2.5 mb-4">
-            <a href="/werk/{{ $featured['slug'] }}" class="bg-accent text-fg px-[18px] py-[11px] font-mono text-[11px] font-bold tracking-wide hover:bg-accent-hover transition-colors">lees de case →</a>
+            <a href="/werk/{{ $featured['slug'] }}" class="bg-accent text-bg rounded-lg px-[18px] py-[11px] font-mono text-[11px] font-bold tracking-wide hover:bg-accent-hover transition-colors">lees de case →</a>
             @if ($featured['tool_url'])
-            <a href="{{ $featured['tool_url'] }}" class="border border-bg text-bg px-[17px] py-[10px] font-mono text-[11px] font-bold tracking-wide hover:bg-bg hover:text-fg transition-colors">probeer de tool ↗</a>
+            <a href="{{ $featured['tool_url'] }}" class="border border-divider text-fg rounded-lg px-[17px] py-[10px] font-mono text-[11px] font-bold tracking-wide hover:border-accent hover:text-accent transition-colors">probeer de tool ↗</a>
             @endif
         </div>
-        <div class="font-mono text-[11px] text-muted-light tracking-wide">
+        <div class="font-mono text-[11px] text-muted tracking-wide">
             case · {{ $featured['reading_time'] }} min lezen · live
         </div>
     </div>
     @endif
-
-    {{-- 01 / over --}}
-    <section id="about" class="mt-[60px] pt-[34px] border-t-2 border-fg">
-        <span class="inline-block bg-accent font-mono text-[11px] font-bold tracking-wide px-2.5 py-1 mb-3.5">01 / over</span>
-        <h2 class="text-[38px] font-extrabold tracking-[-0.03em] leading-none mb-2">de docent achter de tools</h2>
-        <p class="text-sm leading-[1.55] text-muted font-medium max-w-[520px] mb-7">Waarom deze site bestaat — en voor wie.</p>
-        <p class="text-[15px] leading-[1.65] font-medium max-w-[560px] mb-3.5">
-            Vakleerkracht sport in het VSO bij RENN4. In mijn lessen staat plezier centraal. Relatie, structuur en voorspelbaarheid zijn daarvoor de basis.
-        </p>
-        <p class="text-[15px] leading-[1.65] font-medium max-w-[560px]">
-            Deze site is de andere helft. De apps zijn mijn eigen oefening in design en development met AI. Sport-tools — omdat dat is wat ik elke dag doe.
-        </p>
-    </section>
-
-    {{-- 02 / tools --}}
-    <section id="tools" class="mt-[60px] pt-[34px] border-t-2 border-fg">
-        <span class="inline-block bg-accent font-mono text-[11px] font-bold tracking-wide px-2.5 py-1 mb-3.5">02 / tools</span>
-        <h2 class="text-[38px] font-extrabold tracking-[-0.03em] leading-none mb-2">wat ik bouw</h2>
-        <p class="text-sm leading-[1.55] text-muted font-medium max-w-[520px] mb-7">Kleine open-source apps. Gebouwd in het openbaar.</p>
-        <article class="tool-card grid grid-cols-[64px_1fr] gap-5 p-5 items-start border-2 border-fg shadow-[7px_7px_0_#3a7fbf]">
-            <x-muybridge color="#3a7fbf" />
-            <div>
-                <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
-                    <a href="/tools/team-shuffler" class="hover:underline decoration-2 underline-offset-[3px]">team-shuffler</a>
-                </h3>
-                <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
-                    Plak namen, kies aantal teams, klaar. Met optie om paren uit elkaar te houden — handig voor klassen waar bepaalde leerlingen even niet samen kunnen.
-                </div>
-            </div>
-        </article>
-        <article class="tool-card grid grid-cols-[64px_1fr] gap-5 p-5 items-start border-2 border-fg shadow-[7px_7px_0_#d44a2e] mt-6">
-            <x-muybridge color="#d44a2e" />
-            <div>
-                <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
-                    <a href="/tools/leerdoelen" class="hover:underline decoration-2 underline-offset-[3px]">leerdoel-coach</a>
-                </h3>
-                <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
-                    Bouwt een leerdoel via de GIVC-structuur — gedrag, inhoud, voorwaarden, criteria. Coach, geen generator.
-                </div>
-            </div>
-        </article>
-    </section>
-
-    {{-- 03 / werk --}}
-    <section id="werk" class="mt-[60px] pt-[34px] border-t-2 border-fg">
-        <span class="inline-block bg-accent font-mono text-[11px] font-bold tracking-wide px-2.5 py-1 mb-3.5">03 / werk</span>
-        <h2 class="text-[38px] font-extrabold tracking-[-0.03em] leading-none mb-2">wat ik bouwde, en wat ik leerde</h2>
-        <p class="text-sm leading-[1.55] text-muted font-medium max-w-[520px] mb-7">Cases over de beslissingen achter de tools — het werk vóór de code.</p>
-        @forelse ($werk as $case)
-        <article class="grid grid-cols-[64px_1fr] gap-5 py-5 items-start {{ !$loop->first ? 'border-t border-divider' : '' }}">
-            <div class="font-mono text-[22px] font-extrabold tracking-[-0.02em] pt-1">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</div>
-            <div>
-                <div class="font-mono text-[11px] font-semibold tracking-wide text-muted mb-1.5">case · {{ $case['reading_time'] }} min lezen</div>
-                <h3 class="text-base font-extrabold tracking-[-0.01em] mb-2">
-                    <a href="/werk/{{ $case['slug'] }}" class="hover:underline decoration-2 underline-offset-[3px]">{{ $case['title'] }}</a>
-                </h3>
-                <div class="text-[15px] leading-[1.6] text-fg-soft font-medium max-w-[560px]">
-                    {{ $case['lede'] }}
-                </div>
-            </div>
-        </article>
-        @empty
-        <p class="text-[15px] leading-[1.65] font-medium max-w-[560px]">
-            Eerste case komt eraan.
-        </p>
-        @endforelse
-    </section>
 
     <x-footer />
 
