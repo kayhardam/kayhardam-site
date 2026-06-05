@@ -1,7 +1,7 @@
 # design-richting — kayhardam.dev
 
-*vastgelegd na de sessie van 2 juni 2026. doel: volgende sessie kan meteen bouwen.*
-*grond blijft: voor mezelf, duurzaam tempo, terughoudend. de look verandert, de soberheid van aanpak niet.*
+_vastgelegd na de sessie van 2 juni 2026. doel: volgende sessie kan meteen bouwen._
+_grond blijft: voor mezelf, duurzaam tempo, terughoudend. de look verandert, de soberheid van aanpak niet._
 
 ## de richting in één zin
 
@@ -16,6 +16,7 @@ warmte en het persoonlijke: kleine letter, een mens in het midden, thema-toggle.
 **modus** — donker eerst (tahoe). lichte variant + toggle is optioneel, later.
 
 **tokens (donker):**
+
 ```
 --paper  #12173a   diep indigo, achtergrond
 --card   #1b2150   paneel / kaart
@@ -25,7 +26,8 @@ warmte en het persoonlijke: kleine letter, een mens in het midden, thema-toggle.
 --acc    #6f8cff   blauw — primair: nav, knoppen, links, ▸
 --acc2   #9b86ff   violet — alleen beweging / accentmoment
 ```
-*lichte variant (uitgesteld): paper #f7f4ec · card #fffdf8 · ink #171411 · muted #6e665a · line #e7e0d2 · acc #2f54eb · acc2 #6b46e8.*
+
+_lichte variant (uitgesteld): paper #f7f4ec · card #fffdf8 · ink #171411 · muted #6e665a · line #e7e0d2 · acc #2f54eb · acc2 #6b46e8._
 
 **accent-logica** — blauw draagt, violet licht alleen op bij beweging. twee tonen die de tahoe-flow nadoen zonder dat het overal blauw wordt (bewust: "deel accent anders"). accent blijft spaarzaam, ~5% van het beeld.
 
@@ -33,7 +35,7 @@ warmte en het persoonlijke: kleine letter, een mens in het midden, thema-toggle.
 
 **typografie** — inter + jetbrains mono blijven, self-hosted. lowercase display, LOWERCASE mono labels.
 
-**hoeken** — zachte radius (~8px kaarten, ~7px knoppen en pills). dit vervangt de oude "no border-radius"-regel.
+**hoeken** — zachte radius: rounded-2xl (16px) kaarten, rounded-lg (8px) knoppen. dit vervangt de oude "no border-radius"-regel.
 
 **layout-dna** — zelfverzekerde lowercase hero-kop, warme persoonlijke stem, pill-tags voor wayfinding en identiteit.
 
