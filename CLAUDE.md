@@ -43,7 +43,7 @@ Spaarzaam, en alléén op de echte site: nav + kaarten, doorschijnend boven een 
 
 ### Hoeken
 
-Zachte radius — ~8px op kaarten, ~7px op knoppen en pills. Vervangt de oude no-border-radius-regel. Per component met arbitrary values (`rounded-[8px]`); tokeniseren als het patroon vaak genoeg terugkomt.
+Zachte radius — `rounded-2xl` (16px) op kaarten, `rounded-lg` (8px) op knoppen. Vervangt de oude no-border-radius-regel. Per component met Tailwind-utilities; tokeniseren als het patroon vaak genoeg terugkomt.
 
 ### Type-aanpak
 
@@ -57,30 +57,6 @@ Geen vaste type-scale-tokens. Tailwind defaults + arbitrary values per gebruik. 
 - Mono labels: `text-[11px]`
 
 Houdt flexibiliteit; maten kunnen tijdens de redesign schuiven. Tokeniseren als patronen het verdienen.
-
-### Casing
-
-- Display headings: **lowercase** ("kay hardam", "wat ik bouw")
-- Body, paragrafen: **sentence case** ("Vakleerkracht sport in het...")
-- Mono labels: **lowercase** met letter-spacing (~0.04em) ("01 / over", "// live demo · prompt-generator")
-- Inline links in body: zoals omringende tekst
-
-### Edges
-
-Geen `border-radius`. Brutalist commitment. Section-pills, lab-block, buttons — allemaal scherp. Eén ronde corner ergens kraakt het hele systeem.
-
-### Type-aanpak
-
-Geen vaste type-scale-tokens. Tailwind defaults + arbitrary values per gebruik. Bijvoorbeeld:
-
-- Hero h1: `text-[64px] md:text-[88px]` (homepage), `text-[48px] md:text-[64px]` (tool-detail)
-- Section h2: `text-[38px]`
-- Body: `text-[15px]`
-- Lead/hero-subtitle: `text-[17px]`
-- Helper-text onder labels: `text-[14px]`
-- Mono labels: `text-[11px]`
-
-Houdt flexibiliteit. Tokeniseren als patronen vaak genoeg terugkomen om te verdienen.
 
 ## Code-conventies
 
