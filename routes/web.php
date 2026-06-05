@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\LeerdoelenController;
-use Illuminate\Support\Facades\Route;
 use App\Support\Werk;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home', [
@@ -13,7 +13,8 @@ Route::get('/', function () {
 
 Route::get('/werk/{slug}', function (string $slug) {
     $case = Werk::find($slug);
-    abort_if(!$case, 404);
+    abort_if(! $case, 404);
+
     return view('werk', ['werk' => $case]);
 });
 

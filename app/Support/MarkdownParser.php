@@ -26,7 +26,7 @@ class MarkdownParser
     {
         return preg_replace_callback(
             '/<p><img([^>]*?)\s+title="([^"]*)"([^>]*?)><\/p>/',
-            fn($m) => '<figure><img' . rtrim($m[1] . $m[3]) . '><figcaption>' . $m[2] . '</figcaption></figure>',
+            fn ($m) => '<figure><img'.rtrim($m[1].$m[3]).'><figcaption>'.$m[2].'</figcaption></figure>',
             $html,
         );
     }
@@ -47,11 +47,11 @@ class MarkdownParser
                 ],
             ]);
 
-            $environment->addExtension(new CommonMarkCoreExtension());
-            $environment->addExtension(new HeadingPermalinkExtension());
-            $environment->addExtension(new GithubFlavoredMarkdownExtension());
+            $environment->addExtension(new CommonMarkCoreExtension);
+            $environment->addExtension(new HeadingPermalinkExtension);
+            $environment->addExtension(new GithubFlavoredMarkdownExtension);
             $environment->addExtension(new HighlightExtension(
-                new Highlighter(new CssTheme()),
+                new Highlighter(new CssTheme),
             ));
 
             self::$converter = new MarkdownConverter($environment);

@@ -21,7 +21,7 @@ class Leerdoelen implements Agent
      */
     public function instructions(): Stringable|string
     {
-        return <<<PROMPT
+        return <<<'PROMPT'
         Je bent een vakdidact ALO in het Nederlandse werkveld. Je kent de SLO-kerndoelen LO en de praktijk van PO, VO en VSO. Je helpt een vakleerkracht één leerdoel formuleren volgens de GIVC-structuur: Gedrag, Inhoud, Voorwaarden, Criteria.
 
         Je krijgt acht inputs van de docent:

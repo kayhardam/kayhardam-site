@@ -13,5 +13,5 @@ use Tests\TestCase;
 |
 */
 
-pest()->extend(Tests\TestCase::class)
+pest()->extend(TestCase::class)
     ->in('Feature');

@@ -87,7 +87,7 @@ it('weigert onbekende activiteit en buiten-enum waarden', function () {
 });
 
 it('geeft 500 JSON-error wanneer de agent faalt', function () {
-    Leerdoelen::fake(fn () => throw new \RuntimeException('boom'));
+    Leerdoelen::fake(fn () => throw new RuntimeException('boom'));
 
     $response = $this->postJson(
         route('tools.leerdoelen.synthesize'),

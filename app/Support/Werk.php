@@ -14,12 +14,12 @@ class Werk
     {
         $directory = resource_path('markdown/werk');
 
-        if (!File::isDirectory($directory)) {
+        if (! File::isDirectory($directory)) {
             return collect();
         }
 
         return collect(File::files($directory))
-            ->map(fn($file) => self::parse($file))
+            ->map(fn ($file) => self::parse($file))
             ->sortByDesc('date')
             ->values();
     }
@@ -56,7 +56,7 @@ class Werk
 
     private static function splitFrontmatter(string $content): array
     {
-        if (!str_starts_with($content, "---\n")) {
+        if (! str_starts_with($content, "---\n")) {
             return [[], $content];
         }
 
