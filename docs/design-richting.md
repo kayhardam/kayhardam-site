@@ -49,7 +49,7 @@ de hero krijgt een handbal-worp: de loper neemt aanloop → wordt handballer →
 
 ## wat meekomt uit het bestaande systeem
 
-server-first laravel 13 + blade + tailwind v4, geen db, markdown-content. de tool-accent-pattern (`.tool-*`) blijft: per-tool kleuren (team-shuffler blauw, leerdoel-coach koraal) leven naast het blauw/violet van de site-chrome. bestaande inhoud — case, tools, field notes — blijft live.
+server-first laravel 13 + blade + tailwind v4, geen db, markdown-content. de tool-accent-pattern (`.tool-*`) blijft: per-tool kleuren (team-shuffler blauw, leerdoel-coach koraal) leven naast het blauw/violet van de site-chrome. bestaande inhoud — case, tools — blijft live.
 
 ## bouwvolgorde
 
